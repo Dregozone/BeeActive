@@ -1,0 +1,12 @@
+{
+    "default": "home",
+
+    "conn": {
+        "mysqli": {
+            "host": "localhost",
+            "user": "root",
+            "pass": "",
+            "db": "BeeActive"
+        }
+    }
+}

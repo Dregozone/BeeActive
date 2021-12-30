@@ -1,2 +1,0 @@
-# BodyPlanner
-Personal fitness and nutrition assistance app. By entering current and goal measurements or criteria, a diet plan and suggested workout routine will be suggested, the user can later record their actual intake and workouts for the regime to automatically adjust. For example, If a user does an additional exercise one day, the requirement for the rest of the week will be lowered relative to the value assigned to the exercise.
