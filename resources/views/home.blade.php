@@ -5,5 +5,11 @@
 @endsection
 
 @section('content')
-    Home
+    <h1>
+        Home
+    </h1>
+
+    <section class="container">
+        content
+    </section>
 @endsection
