@@ -51,12 +51,6 @@
             return true;
         }
 
-
-
-
-
-
-
         public function setWeightLbs($weight) {
             $this->weight = $weight;
 

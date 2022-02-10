@@ -7,23 +7,18 @@ use PHPUnit\Framework\TestCase;
 
 class MacroCalculatorTest extends TestCase
 {
-
-
+    
     public function setUp() : void {
         parent::setUp();
         
         //
-
     }
 
     public function tearDown() : void {
         parent::tearDown();
 
         //
-
     }
-
-
 
     /**
      * 
@@ -61,6 +56,7 @@ class MacroCalculatorTest extends TestCase
         $this->assertEquals($expectedFat, $fat);
         $this->assertEquals($expectedCalories, $calories);
 
+        /*
         echo "
             Goal: {$goal}
 
@@ -69,5 +65,6 @@ class MacroCalculatorTest extends TestCase
             Fat: {$fat}g
             Calories: {$calories} kcal
         ";
+        */
     }
 }

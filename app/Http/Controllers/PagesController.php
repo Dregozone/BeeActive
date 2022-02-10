@@ -38,16 +38,60 @@ class PagesController extends Controller
 
         $goal = $calculator->getGoal();
 
-        echo "
-            Goal: {$goal}
+        $foodItems = [
+            [
+                "img" => "",
+                "item" => "Huel Black (2 scoops)",
+                "carbs" => "23",
+                "protein" => "40",
+                "fat" => "18",
+                "calories" => "414",
+            ],
+            [
+                "img" => "",
+                "item" => "Tin of Tuna",
+                "carbs" => "0",
+                "protein" => "28",
+                "fat" => "1.5",
+                "calories" => "125",
+            ],
+            [
+                "img" => "",
+                "item" => "Ravioli",
+                "carbs" => "51",
+                "protein" => "10",
+                "fat" => "6",
+                "calories" => "298",
+            ],
+        ];
 
-            Carbs: {$carbs}g
-            Protein: {$protein}g
-            Fat: {$fat}g
-            Calories: {$calories} kcal
-        ";
+        $consumeds = [
+            [
+                "img" => "",
+                "item" => "",
+                "quantity" => 1,
+            ],
+            [
+                "img" => "",
+                "item" => "",
+                "quantity" => 1,
+            ],
+        ];
 
-        return view('nutrition');
+        return view('nutrition', [
+            'goal' => $goal,
+            'carbs' => $carbs,
+            'protein' => $protein,
+            'fat' => $fat,
+            'calories' => $calories,
+            'foodItems' => $foodItems,
+            'consumeds' => $consumeds,
+        ]);
+    }
+
+    public function nutritionInsertHandler(Request $request) {
+        
+        dd($request);
     }
 
     public function profile() {
