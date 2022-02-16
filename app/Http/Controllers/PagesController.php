@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Classes\MacroCalculator;
 use Illuminate\Http\Request;
+use App\Models\Log;
 
 class PagesController extends Controller
 {
     
     public function home() {
+
+        //dd( Log::all() );
+        //dd( Log::find(2) );
 
         return view('home');
     }
