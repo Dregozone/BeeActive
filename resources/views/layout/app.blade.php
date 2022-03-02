@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>@yield('title') - Bee Active</title>
+        <title>@yield('title') - {{ config('app.name') }}</title>
 
 
 
@@ -26,6 +26,8 @@
                             Home
                         </a>
                     </li>
+
+                    @auth
                     <li>
                         <a href="{{ route('workouts') }}">
                             Workouts
@@ -36,6 +38,7 @@
                             Nutrition
                         </a>
                     </li>
+                    @endauth
                 </ul>
 
                 <ul>
@@ -48,7 +51,7 @@
                     <li>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
-                            <button type="submit">Logout</button>
+                            <button class="logoutButton" type="submit">Logout</button>
                         </form>
                     </li>
                     @endauth

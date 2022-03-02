@@ -9,7 +9,7 @@
         Register
     </h1>
 
-    <section class="container">
+    <section class="container" style="width: 42%;">
         <form action="{{ route('register') }}" method="post" autocomplete="off">
             @csrf
             

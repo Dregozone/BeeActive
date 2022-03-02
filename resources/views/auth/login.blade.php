@@ -9,7 +9,7 @@
         Login
     </h1>
 
-    <section class="container">
+    <section class="container" style="width: 42%;">
         @if (session('status'))
             {{ session('status') }}
         @endif
@@ -20,7 +20,6 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input class="form-control @error('email') form-error @enderror" type="email" name="email" id="email" placeholder="Enter your email address" value="{{ old('email') }}" />
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 
                 @error('email')
                     <div class="form-error">

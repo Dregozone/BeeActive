@@ -11,17 +11,17 @@ Route::get('/home', [PagesController::class, 'home'])
     ->name('home');
 
 Route::get('/workouts', [PagesController::class, 'workouts'])
-    ->middleware('LogRoute')
+    ->middleware(['auth', 'LogRoute'])
     ->name('workouts');
 
 Route::get('/nutrition', [PagesController::class, 'nutrition'])
-    ->middleware('LogRoute')
+    ->middleware(['auth', 'LogRoute'])
     ->name('nutrition');
 Route::post('/nutrition', [PagesController::class, 'nutritionInsertHandler'])
     ->middleware('LogRoute');
 
 Route::get('/profile', [PagesController::class, 'profile'])
-    ->middleware('LogRoute')
+    ->middleware(['auth', 'LogRoute'])
     ->name('profile');
 
 Route::get('/login', [LoginController::class, 'index'])
@@ -37,7 +37,7 @@ Route::post('/register', [RegisterController::class, 'action'])
     ->middleware('LogRoute');
     
 Route::post('/logout', [LogoutController::class, 'index'])
-    ->middleware('LogRoute')
+    ->middleware(['auth', 'LogRoute'])
     ->name('logout');
 
 Route::get('/', [PagesController::class, 'home']);
