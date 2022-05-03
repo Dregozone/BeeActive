@@ -3,8 +3,6 @@
     <head>
         <title>@yield('title') - {{ config('app.name') }}</title>
 
-
-
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
@@ -15,6 +13,11 @@
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/shared.css') }}" />
+
+        @if ( file_exists('css/' . Route::currentRouteName() . '.css') )
+            <link rel="stylesheet" href="{{ asset('css/' . Route::currentRouteName() . '.css') }}" />
+        @endif 
+
     </head>
     <body>
 

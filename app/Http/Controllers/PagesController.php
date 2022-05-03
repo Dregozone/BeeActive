@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\MacroCalculator;
-use Illuminate\Http\Request;
 use App\Models\Log;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Classes\MacroCalculator;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -100,6 +102,23 @@ class PagesController extends Controller
 
     public function profile() {
 
-        return view('profile');
+        $user = User::
+              where('id', Auth::user()->id)
+            ->get()[0]
+            ->toArray();
+
+        return view('profile', [
+            'user' => $user,
+        ]);
+    }
+
+    /** Reset password
+     * 
+     * 
+     */
+    public function action(Request $request) {
+
+        dd($request);
+
     }
 }
