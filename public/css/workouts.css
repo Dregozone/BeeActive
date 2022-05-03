@@ -1,0 +1,47 @@
+
+h2 {
+    font-size: 185%;
+}
+
+h3 {
+    font-size: 165%;
+}
+
+.recordContainer {
+    /*  */
+}
+    .recordContainer > h2 {
+        font-size: 165%;
+    }
+
+.benchmarkContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+    .benchmarkContainer > div {
+        margin: 0.5% 1%; 
+        font-size: 65%;
+    }
+
+.scheduleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+    .scheduleContainer > div {
+        margin: 0.5% 1%;
+        font-size: 65%;
+    }
+
+@media screen and (min-width: 480px) {
+    .benchmarkContainer {
+        flex-direction: row;
+    }
+
+    .scheduleContainer {
+        flex-direction: row;
+    }
+}

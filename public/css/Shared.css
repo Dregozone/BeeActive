@@ -69,6 +69,16 @@ button {
         color: white;
     }
 
+.center {
+    text-align: center;
+}
+.left {
+    text-align: left;
+}
+.right {
+    text-align: right;
+}
+
 div.form-error {
     color: rgb(180, 30, 30);
     font-size: 95%;
