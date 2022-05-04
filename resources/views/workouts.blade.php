@@ -237,13 +237,15 @@
                             </thead>
                             <tbody>
 
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                @foreach ($rotations as $rotation)
+                                    <tr>
+                                        <td>{{ $rotation->week }}</td>
+                                        <td>{{ $rotation->program }}</td>
+                                        <td>{{ $rotation->reps }}</td>
+                                        <td>{{ $rotation->sets }}</td>
+                                        <td>{{ $rotation->weight_percent }}</td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -346,12 +348,14 @@
                     </thead>
                     <tbody>
                         
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        @foreach ($workouts as $workout)
+                            <tr>
+                                <td>{{ $workout->session }}</td>
+                                <td>{{ $workout->exercise_no }}</td>
+                                <td>{{ $workout->equipment }}</td>
+                                <td>{{ round($workout->weight_1rm, 1) }}</td>
+                            </tr>
+                        @endforeach
 
                     </tbody>
                 </table>

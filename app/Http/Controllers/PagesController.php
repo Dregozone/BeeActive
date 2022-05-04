@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Log;
 use App\Models\User;
+use App\Models\Workout;
+use App\Models\Rotation;
 use Illuminate\Http\Request;
 use App\Classes\MacroCalculator;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +23,13 @@ class PagesController extends Controller
 
     public function workouts() {
 
-        return view('workouts');
+        $rotations = Rotation::all();
+        $workouts = Workout::all();
+
+        return view('workouts', [
+            'rotations' => $rotations,
+            'workouts' => $workouts,
+        ]);
     }
 
     public function nutrition() {

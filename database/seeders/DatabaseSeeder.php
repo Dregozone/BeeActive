@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\WorkoutsSeeder;
+use Database\Seeders\RotationsSeeder;
 use Database\Seeders\SharedLogsSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(SharedLogsSeeder::class);
+        //$this->call(SharedLogsSeeder::class);
+        //$this->call(RotationsSeeder::class);
+        $this->call(WorkoutsSeeder::class);
     }
 }
