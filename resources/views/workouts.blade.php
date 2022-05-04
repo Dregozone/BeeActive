@@ -205,6 +205,12 @@
                         @foreach ( $rotations as $week ) 
                             @foreach ( $days as $day ) 
                                 
+                                <tr>
+                                    <th colspan="5">
+                                        Week: {{ $week->week }}, Day: {{ $day->day }}
+                                    </th>
+                                </tr>
+
                                 @if ( 
                                     isset( $sessionIndexed[$day->session]["primary"] ) && 
                                     isset( $workoutIndexed[$sessionIndexed[$day->session]["primary"]] )
@@ -218,6 +224,12 @@
                                             <td>{{ round(($week->weight_percent * round($primary["weight_1rm"], 1)) / 100, 1) }}</td>
                                         </tr>
                                     @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="5">
+                                            Rest day.
+                                        </td>
+                                    </tr>
                                 @endif 
 
                                 @if ( 
