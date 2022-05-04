@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Day;
 use App\Models\Log;
 use App\Models\User;
+use App\Models\Session;
 use App\Models\Workout;
 use App\Models\Rotation;
 use Illuminate\Http\Request;
@@ -25,10 +27,26 @@ class PagesController extends Controller
 
         $rotations = Rotation::all();
         $workouts = Workout::all();
+        $sessions = Session::all();
+        $days = Day::all();
+
+        $sessionIndexed = [];
+        foreach ( $sessions->toArray() as $session ) {
+            $sessionIndexed[$session["session"]] = $session;
+        }
+
+        $workoutIndexed = [];
+        foreach ( $workouts->toArray() as $workout ) {
+            $workoutIndexed[$workout["session"]][$workout["exercise_no"]] = $workout;
+        }
 
         return view('workouts', [
             'rotations' => $rotations,
             'workouts' => $workouts,
+            'workoutIndexed' => $workoutIndexed,
+            'sessions' => $sessions, 
+            'sessionIndexed' => $sessionIndexed,
+            'days' => $days, 
         ]);
     }
 

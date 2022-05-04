@@ -201,14 +201,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+
+                        @foreach ( $rotations as $week ) 
+                            @foreach ( $days as $day ) 
+                                
+                                @if ( 
+                                    isset( $sessionIndexed[$day->session]["primary"] ) && 
+                                    isset( $workoutIndexed[$sessionIndexed[$day->session]["primary"]] )
+                                )
+                                    @foreach ( $workoutIndexed[$sessionIndexed[$day->session]["primary"]] as $primary )
+                                        <tr>
+                                            <td>{{ $week->program }}</td>
+                                            <td>{{ $primary["session"] }}</td>
+                                            <td>{{ $primary["equipment"] }}</td>
+                                            <td>{{ $week->sets }} x {{ $week->reps }}</td>
+                                            <td>{{ round(($week->weight_percent * round($primary["weight_1rm"], 1)) / 100, 1) }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif 
+
+                                @if ( 
+                                    isset( $sessionIndexed[$day->session]["secondary"] ) && 
+                                    isset( $workoutIndexed[$sessionIndexed[$day->session]["secondary"]] )
+                                )
+                                    @foreach ( $workoutIndexed[$sessionIndexed[$day->session]["secondary"]] as $secondary )
+                                        <tr>
+                                            <td>{{ $week->program }}</td>
+                                            <td>{{ $secondary["session"] }}</td>
+                                            <td>{{ $secondary["equipment"] }}</td>
+                                            <td>{{ $week->sets }} x {{ $week->reps }}</td>
+                                            <td>{{ round(($week->weight_percent * round($secondary["weight_1rm"], 1)) / 100, 1) }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+
+                            @endforeach
+                        @endforeach 
 
                     </tbody>
                 </table>
@@ -262,11 +290,13 @@
                             </thead>
                             <tbody>
 
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                @foreach ( $sessions as $session )
+                                    <tr>
+                                        <td>{{ $session->session }}</td>
+                                        <td>{{ $session->primary }}</td>
+                                        <td>{{ $session->secondary }}</td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -282,10 +312,12 @@
                             </thead>
                             <tbody>
 
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                @foreach ( $days as $day )
+                                    <tr>
+                                        <td>{{ $day->day }}</td>
+                                        <td>{{ $day->session }}</td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
