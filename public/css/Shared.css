@@ -98,6 +98,17 @@ button.logoutButton {
     color: inherit;
 }
 
+.table > :not(caption) > * > * {
+    border-bottom-width: 0;
+}
+
+thead > tr {
+    border-bottom-width: 0;
+}
+.table > :not(:first-child) {
+    border-top: 2px solid rgb(168, 145, 39);
+  }
+
 @media screen and (min-width: 480px) {
     
     nav > .container {

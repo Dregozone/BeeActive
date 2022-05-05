@@ -1,9 +1,0 @@
-@extends('layout.app')
-
-@section('title')
-    Logout
-@endsection
-
-@section('content')
-    Logout
-@endsection

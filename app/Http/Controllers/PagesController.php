@@ -23,7 +23,7 @@ class PagesController extends Controller
         return view('home');
     }
 
-    public function workouts() {
+    public function schedule() {
 
         $rotations = Rotation::all();
         $workouts = Workout::all();
@@ -40,13 +40,22 @@ class PagesController extends Controller
             $workoutIndexed[$workout["session"]][$workout["exercise_no"]] = $workout;
         }
 
-        return view('workouts', [
+        return view('schedule', [
             'rotations' => $rotations,
             'workouts' => $workouts,
             'workoutIndexed' => $workoutIndexed,
             'sessions' => $sessions, 
             'sessionIndexed' => $sessionIndexed,
             'days' => $days, 
+        ]);
+    }
+
+    public function workouts() {
+
+        //
+        
+        return view('workouts', [
+            'a' => '',
         ]);
     }
 

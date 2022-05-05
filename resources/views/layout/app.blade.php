@@ -32,6 +32,11 @@
 
                     @auth
                     <li>
+                        <a href="{{ route('schedule') }}">
+                            Schedule
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('workouts') }}">
                             Workouts
                         </a>

@@ -10,6 +10,10 @@ Route::get('/home', [PagesController::class, 'home'])
     ->middleware('LogRoute')
     ->name('home');
 
+Route::get('/schedule', [PagesController::class, 'schedule'])
+    ->middleware(['auth', 'LogRoute'])
+    ->name('schedule');
+
 Route::get('/workouts', [PagesController::class, 'workouts'])
     ->middleware(['auth', 'LogRoute'])
     ->name('workouts');
