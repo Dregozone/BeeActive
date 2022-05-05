@@ -1,0 +1,55 @@
+h3 {
+    margin-top: 15px;
+}
+
+.personalRecords {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 90%;
+    margin: 0.5% 5%;
+}
+    .personalRecords > div {
+        border: 1px solid black;
+        width: 24%;
+        padding: 1%;
+        text-align: center;
+    }
+    h4 {
+        font-size: 110%;
+    }
+
+.achievements {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 90%;
+    margin: 0.5% 5%;
+}
+    .achievements > div {
+        border: 1px solid black;
+        width: 24%;
+        padding: 1%;
+        margin: 0.5% 0.5%;
+        text-align: center;
+    }
+
+.userParticipationCounts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+    .userParticipationCounts > div {
+        border: 1px solid darkslategrey;
+        padding: 1.2%;
+        text-align: center;
+        width: 30%;
+    }
+        .userParticipationCounts > div > div {
+            font-size: 260%;
+            font-weight: 800;
+        }
