@@ -25,6 +25,10 @@
             <div class="container">
                 <ul>
                     <li>
+                        <img src="{{ asset('img/logo.png') }}" alt="Bee Active logo" class="logo" />
+                    </li>
+
+                    <li>
                         <a href="{{ route('home') }}">
                             Home
                         </a>
