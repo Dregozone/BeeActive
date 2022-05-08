@@ -18,6 +18,10 @@
             <link rel="stylesheet" href="{{ asset('css/' . Route::currentRouteName() . '.css') }}" />
         @endif 
 
+        @if ( file_exists('js/' . Route::currentRouteName() . '.js') )
+            <script src="{{ asset('js/' . Route::currentRouteName() . '.js') }}"></script>
+        @endif 
+
     </head>
     <body>
 

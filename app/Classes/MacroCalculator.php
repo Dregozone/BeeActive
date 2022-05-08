@@ -42,13 +42,14 @@
             $this->fat *= $modifier;
 
             // Calculate calories from macros
-            $this->calories = 
-                ($this->protein * 4) + 
-                ($this->carbs * 4) + 
-                ($this-> fat * 9)
-            ;
+            $this->calories = $this->calculateCalories($this->carbs, $this->protein, $this->fat);
 
             return true;
+        }
+
+        public function calculateCalories($carbs, $protein, $fat) {
+
+            return ($protein * 4) + ($carbs * 4) + ($fat * 9);
         }
 
         public function setWeightLbs($weight) {

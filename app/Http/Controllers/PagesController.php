@@ -7,6 +7,7 @@ use App\Models\Log;
 use App\Models\User;
 use App\Models\Session;
 use App\Models\Workout;
+use App\Models\MealItem;
 use App\Models\Rotation;
 use Illuminate\Http\Request;
 use App\Classes\MacroCalculator;
@@ -79,42 +80,19 @@ class PagesController extends Controller
 
         $goal = $calculator->getGoal();
 
-        $foodItems = [
-            [
-                "img" => "",
-                "item" => "Huel Black (2 scoops)",
-                "carbs" => "23",
-                "protein" => "40",
-                "fat" => "18",
-                "calories" => "414",
-            ],
-            [
-                "img" => "",
-                "item" => "Tin of Tuna",
-                "carbs" => "0",
-                "protein" => "28",
-                "fat" => "1.5",
-                "calories" => "125",
-            ],
-            [
-                "img" => "",
-                "item" => "Ravioli",
-                "carbs" => "51",
-                "protein" => "10",
-                "fat" => "6",
-                "calories" => "298",
-            ],
-        ];
+        $foodItems = MealItem::
+              where('is_active', true)
+            ->get();
 
         $consumeds = [
             [
                 "img" => "",
-                "item" => "",
+                "name" => "",
                 "quantity" => 1,
             ],
             [
                 "img" => "",
-                "item" => "",
+                "name" => "",
                 "quantity" => 1,
             ],
         ];
@@ -131,8 +109,24 @@ class PagesController extends Controller
     }
 
     public function nutritionInsertHandler(Request $request) {
-        
-        dd($request);
+
+        $macroCalculator = new MacroCalculator();
+
+        $toInsert = [
+            'img' => '',
+            'name' => $request->item,
+            'carbs' => (float)$request->carbs,
+            'protein' => (float)$request->protein,
+            'fat' => (float)$request->fat,
+            'calories' => (float)$macroCalculator->calculateCalories($request->carbs, $request->protein, $request->fat),
+            'is_active' => 1,
+        ];
+
+        //dd( $toInsert );
+
+        MealItem::create($toInsert);
+
+        return redirect()->route('nutrition');
     }
 
     public function profile() {

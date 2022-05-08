@@ -9,6 +9,7 @@
         Home
     </h1>
 
+    @auth 
     <section class="container" style="display: flex;">
         
         <div style="width: 48%; margin-right: 2%;">
@@ -143,5 +144,13 @@
 
 
     </section>
+    @endauth 
+
+    @guest 
+    <section class="contaner">
+        <h2>News</h2>
+        ... 
+    </section>
+    @endguest 
 
 @endsection

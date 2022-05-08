@@ -79,9 +79,9 @@
 
                         @foreach ($consumeds as $consumed)
                             <tr>
-                                <td>img</td>
-                                <td>Item</td>
-                                <td>Qty</td>
+                                <td>{{ $consumed["img"] }}</td>
+                                <td>{{ $consumed["name"] }}</td>
+                                <td>{{ $consumed["quantity"] }}</td>
                             </tr>
                         @endforeach
 
@@ -91,51 +91,8 @@
             </div>
         </div>
 
-
-        <div class="block">
-            <table class="table table-striped table-hover" style="text-align: center;">
-                <thead>
-                    <tr>
-                        <th colspan="8">
-                            <h2>
-                                Record a meal
-                            </h2>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th> img </th>
-                        <th> Item </th>
-                        <th> Carbs </th>
-                        <th> Protein </th>
-                        <th> Fat </th>
-                        <th> Calories </th>
-                        <th> Status (Good|Neutral|Bad) </th>
-                        <th> Add </th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach ($foodItems as $item)
-                        <tr>
-                            <td>{{ $item["img"] }}</td>
-                            <td>{{ $item["item"] }}</td>
-                            <td>{{ $item["carbs"] }}</td>
-                            <td>{{ $item["protein"] }}</td>
-                            <td>{{ $item["fat"] }}</td>
-                            <td>{{ $item["calories"] }}</td>
-                            <td>(calculate)</td>
-                            <td>
-                                <div class="btn btn-success">
-                                    +
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div>
-
+        <hr />
+        
         <div class="block">
             <h2 style="text-align: center;">
                 Add a new meal item
@@ -168,6 +125,64 @@
                     <input class="btn btn-primary" type="submit" value="Add" aria-label="" />
                 </div>
             </form>
+        </div>
+
+        <div class="block">
+            <table class="table table-striped table-hover" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th colspan="8">
+                            <h2>
+                                Record a meal
+                            </h2>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th> img </th>
+                        <th> Item </th>
+                        <th> Carbs </th>
+                        <th> Protein </th>
+                        <th> Fat </th>
+                        <th> Calories </th>
+                        <th> Status (Good|Neutral|Bad) </th>
+                        <th> Quantity </th>
+                        <th> Add </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php $row = 1; ?>
+                    @foreach ($foodItems as $item)
+                        <tr>
+                            <td>{{ $item["img"] }}</td>
+                            <td>{{ $item["name"] }}</td>
+                            <td>{{ $item["carbs"] }}</td>
+                            <td>{{ $item["protein"] }}</td>
+                            <td>{{ $item["fat"] }}</td>
+                            <td>{{ $item["calories"] }}</td>
+                            <td>(calculate)</td>
+                            <td>
+                                <input 
+                                    type="number" 
+                                    value="1" 
+                                    min="1" 
+                                    max="100" 
+                                    id="qty-{{ $row }}" 
+                                    aria-label="Quantity of meal item" 
+                                    style="max-width: 50px;"
+                                />
+                            </td>
+                            <td>
+                                <div class="btn btn-success" onclick="recordMeal('{{ $row }}');">
+                                    +
+                                </div>
+                            </td>
+                        </tr>
+                        <?php $row++; ?>
+                    @endforeach
+
+                </tbody>
+            </table>
         </div>
 
     </section>
