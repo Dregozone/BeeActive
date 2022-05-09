@@ -7,10 +7,12 @@ use App\Models\Log;
 use App\Models\User;
 use App\Models\Session;
 use App\Models\Workout;
+use App\Models\Consumed;
 use App\Models\MealItem;
 use App\Models\Rotation;
 use Illuminate\Http\Request;
 use App\Classes\MacroCalculator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
@@ -84,18 +86,27 @@ class PagesController extends Controller
               where('is_active', true)
             ->get();
 
-        $consumeds = [
-            [
-                "img" => "",
-                "name" => "",
-                "quantity" => 1,
-            ],
-            [
-                "img" => "",
-                "name" => "",
-                "quantity" => 1,
-            ],
-        ];
+        $consumeds = Consumed::
+              join('meal_items', 'consumeds.meal_item_id', '=', 'meal_items.id') 
+            ->get([
+                'meal_items.img', 
+                'meal_items.name', 
+                'consumeds.quantity',
+                'meal_items.carbs',
+                'meal_items.protein',
+                'meal_items.fat',
+                'meal_items.calories',
+            ]);
+
+        $totals = Consumed::
+              selectRaw('
+                SUM(consumeds.quantity * meal_items.carbs) AS carbs, 
+                SUM(consumeds.quantity * meal_items.protein) AS protein, 
+                SUM(consumeds.quantity * meal_items.fat) AS fat, 
+                SUM(consumeds.quantity * meal_items.calories) AS calories 
+              ')
+            ->join('meal_items', 'consumeds.meal_item_id', '=', 'meal_items.id') 
+            ->get()[0];
 
         return view('nutrition', [
             'goal' => $goal,
@@ -105,26 +116,36 @@ class PagesController extends Controller
             'calories' => $calories,
             'foodItems' => $foodItems,
             'consumeds' => $consumeds,
+            'used' => $totals,
         ]);
     }
 
     public function nutritionInsertHandler(Request $request) {
 
-        $macroCalculator = new MacroCalculator();
+        if ( $request->action == "addMealItem" ) {
 
-        $toInsert = [
-            'img' => '',
-            'name' => $request->item,
-            'carbs' => (float)$request->carbs,
-            'protein' => (float)$request->protein,
-            'fat' => (float)$request->fat,
-            'calories' => (float)$macroCalculator->calculateCalories($request->carbs, $request->protein, $request->fat),
-            'is_active' => 1,
-        ];
+            $macroCalculator = new MacroCalculator();
 
-        //dd( $toInsert );
+            $toInsert = [
+                'img' => '',
+                'name' => $request->item,
+                'carbs' => round((float)$request->carbs, 1),
+                'protein' => round((float)$request->protein, 1),
+                'fat' => round((float)$request->fat, 1),
+                'calories' => round((float)$macroCalculator->calculateCalories($request->carbs, $request->protein, $request->fat), 1),
+                'is_active' => 1,
+            ];
 
-        MealItem::create($toInsert);
+            MealItem::create($toInsert);
+
+        } else if ( $request->action == "addConsumed" ) {
+
+            Consumed::create([
+                'user_id' => auth()->user()->id,
+                'meal_item_id' => $request->meal_item_id,
+                'quantity' => $request->quantity,
+            ]);
+        }
 
         return redirect()->route('nutrition');
     }

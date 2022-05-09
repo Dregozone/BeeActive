@@ -35,26 +35,26 @@
                     <tr>
                         <th>Carbs</th>
                         <td>{{ $carbs }}g</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $used->carbs }}g</td>
+                        <td>{{ $carbs - $used->carbs }}g</td>
                     </tr>
                     <tr>
                         <th>Protein</th>
                         <td>{{ $protein }}g</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $used->protein }}g</td>
+                        <td>{{ $protein - $used->protein }}g</td>
                     </tr>
                     <tr>
                         <th>Fat</th>
                         <td>{{ $fat }}g</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $used->fat }}g</td>
+                        <td>{{ $fat - $used->fat }}g</td>
                     </tr>
                     <tr>
                         <th style="border-top: 1px dotted black;">Calories</th>
                         <td style="border-top: 1px dotted black;">{{ $calories }} kcal</td>
-                        <td style="border-top: 1px dotted black;"></td>
-                        <td style="border-top: 1px dotted black;"></td>
+                        <td style="border-top: 1px dotted black;">{{ $used->calories }} kcal</td>
+                        <td style="border-top: 1px dotted black;">{{ $calories - $used->calories }}</td>
                     </tr>
                 </table>
             </div>
@@ -92,7 +92,7 @@
         </div>
 
         <hr />
-        
+
         <div class="block">
             <h2 style="text-align: center;">
                 Add a new meal item
@@ -101,6 +101,8 @@
             <form style="display: flex; align-items: flex-end; justify-content: space-between;" action="{{ route('nutrition') }}" method="post" autocomplete="off">
                 @csrf
 
+                <input type="hidden" name="action" value="addMealItem" />
+
                 <div class="form-group">
                     <label for="item">Item</label>
                     <input type="text" name="item" id="item" class="form-control" placeholder="Enter item name" value="" />
@@ -108,21 +110,21 @@
 
                 <div class="form-group">
                     <label for="carbs">Carbs</label>
-                    <input type="number" name="carbs" id="carbs" class="form-control" placeholder="Enter carbs (g)" value="" />
+                    <input type="number" step="0.1" name="carbs" id="carbs" class="form-control" placeholder="Enter carbs (g)" value="" />
                 </div>
 
                 <div class="form-group">
                     <label for="protein">Protein</label>
-                    <input type="number" name="protein" id="protein" class="form-control" placeholder="Enter protein (g)" value="" />
+                    <input type="number" step="0.1" name="protein" id="protein" class="form-control" placeholder="Enter protein (g)" value="" />
                 </div>
 
                 <div class="form-group">
                     <label for="fat">Fat</label>
-                    <input type="number" name="fat" id="fat" class="form-control" placeholder="Enter fat (g)" value="" />
+                    <input type="number" step="0.1" name="fat" id="fat" class="form-control" placeholder="Enter fat (g)" value="" />
                 </div>
 
                 <div class="form-group">
-                    <input class="btn btn-primary" type="submit" value="Add" aria-label="" />
+                    <input class="btn btn-primary" type="submit" value="Add" aria-label="Add new meal item button" />
                 </div>
             </form>
         </div>
@@ -151,34 +153,40 @@
                 </thead>
                 <tbody>
 
-                    <?php $row = 1; ?>
                     @foreach ($foodItems as $item)
                         <tr>
                             <td>{{ $item["img"] }}</td>
                             <td>{{ $item["name"] }}</td>
-                            <td>{{ $item["carbs"] }}</td>
-                            <td>{{ $item["protein"] }}</td>
-                            <td>{{ $item["fat"] }}</td>
-                            <td>{{ $item["calories"] }}</td>
+                            <td>{{ ROUND($item["carbs"], 1) }}</td>
+                            <td>{{ ROUND($item["protein"], 1) }}</td>
+                            <td>{{ ROUND($item["fat"], 1) }}</td>
+                            <td>{{ ROUND($item["calories"], 1) }}</td>
                             <td>(calculate)</td>
-                            <td>
-                                <input 
-                                    type="number" 
-                                    value="1" 
-                                    min="1" 
-                                    max="100" 
-                                    id="qty-{{ $row }}" 
-                                    aria-label="Quantity of meal item" 
-                                    style="max-width: 50px;"
-                                />
-                            </td>
-                            <td>
-                                <div class="btn btn-success" onclick="recordMeal('{{ $row }}');">
-                                    +
-                                </div>
-                            </td>
+
+                            <form action="{{ route('nutrition') }}" method="post">
+                                @csrf 
+
+                                <input type="hidden" name="action" value="addConsumed" />
+                                <input type="hidden" name="meal_item_id" value="{{ $item["id"] }}" />
+
+                                <td>
+                                    <input 
+                                        type="number"
+                                        name="quantity"
+                                        value="1" 
+                                        min="1" 
+                                        max="100" 
+                                        id="qty-{{ $item["id"] }}" 
+                                        aria-label="Quantity of meal item" 
+                                        style="max-width: 50px;"
+                                    />
+                                </td>
+                                <td>
+                                    <input type="submit" class="btn btn-success" value="+">
+                                </td>
+                            </form>
+
                         </tr>
-                        <?php $row++; ?>
                     @endforeach
 
                 </tbody>
