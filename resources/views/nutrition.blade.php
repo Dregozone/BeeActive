@@ -83,7 +83,7 @@
                                     @if ( file_exists('img/' . $consumed["img"] . '.png') )    
                                         <img src="{{ asset('img/' . $consumed["img"] . '.png') }}" class="mealItemImg" alt="{{ $consumed["img"] }}" />
                                     @else 
-                                        {{-- No img --}} 
+                                        <img src="{{ asset('img/missing.png') }}" class="mealItemImg" alt="Missing image" />
                                     @endif
                                 </td>
                                 <td>{{ $consumed["name"] }}</td>
@@ -136,73 +136,85 @@
         </div>
 
         <div class="block">
-            <table class="table table-striped table-hover" style="text-align: center;">
-                <thead>
-                    <tr>
-                        <th colspan="8">
-                            <h2>
-                                Record a meal
-                            </h2>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th> img </th>
-                        <th> Item </th>
-                        <th> Carbs </th>
-                        <th> Protein </th>
-                        <th> Fat </th>
-                        <th> Calories </th>
-                        <th> Status (Good|Neutral|Bad) </th>
-                        <th> Quantity </th>
-                        <th> Add </th>
-                    </tr>
-                </thead>
-                <tbody>
 
-                    @foreach ($foodItems as $item)
-                        <tr>
-                            <td>
-                                @if ( file_exists('img/' . $item["img"] . '.png') )    
-                                    <img src="{{ asset('img/' . $item["img"] . '.png') }}" class="mealItemImg" alt="{{ $item["img"] }}" />
-                                @else 
-                                    {{-- No img --}} 
-                                @endif    
-                            </td>
-                            <td>{{ $item["name"] }}</td>
-                            <td>{{ ROUND($item["carbs"], 1) }}</td>
-                            <td>{{ ROUND($item["protein"], 1) }}</td>
-                            <td>{{ ROUND($item["fat"], 1) }}</td>
-                            <td>{{ ROUND($item["calories"], 1) }}</td>
-                            <td>(calculate)</td>
+            <h2 class="center">
+                Record a meal
+            </h2>
 
-                            <form action="{{ route('nutrition') }}" method="post">
-                                @csrf 
+            <input 
+                class="form-control" 
+                type="text" 
+                id="mealItemsInput" 
+                onkeyup="mealItemsFilter()" 
+                placeholder="Filter: Start typing a meal item name..." 
+                title="Enter a meal item name"
+            >
 
-                                <input type="hidden" name="action" value="addConsumed" />
-                                <input type="hidden" name="meal_item_id" value="{{ $item["id"] }}" />
-
-                                <td>
-                                    <input 
-                                        type="number"
-                                        name="quantity"
-                                        value="1" 
-                                        min="1" 
-                                        max="100" 
-                                        id="qty-{{ $item["id"] }}" 
-                                        aria-label="Quantity of meal item" 
-                                        style="max-width: 50px;"
-                                    />
-                                </td>
-                                <td>
-                                    <input type="submit" class="btn btn-success" value="+">
-                                </td>
-                            </form>
-
+            <div style="
+                max-height: 350px;
+                overflow-y: auto;
+            ">
+                <table id="mealItemsTable" class="table table-striped table-hover" style="text-align: center;">
+                    <thead>
+                        <tr class="header">
+                            <th> img </th>
+                            <th> Item </th>
+                            <th> Carbs </th>
+                            <th> Protein </th>
+                            <th> Fat </th>
+                            <th> Calories </th>
+                            <th> Status (Good|Neutral|Bad) </th>
+                            <th> Quantity </th>
+                            <th> Add </th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
+                        @foreach ($foodItems as $item)
+                            <tr>
+                                <td>
+                                    @if ( file_exists('img/' . $item["img"] . '.png') )    
+                                        <img src="{{ asset('img/' . $item["img"] . '.png') }}" class="mealItemImg" alt="{{ $item["img"] }}" />
+                                    @else 
+                                        <img src="{{ asset('img/missing.png') }}" class="mealItemImg" alt="Missing image" />
+                                    @endif    
+                                </td>
+                                <td>{{ $item["name"] }}</td>
+                                <td>{{ ROUND($item["carbs"], 1) }}</td>
+                                <td>{{ ROUND($item["protein"], 1) }}</td>
+                                <td>{{ ROUND($item["fat"], 1) }}</td>
+                                <td>{{ ROUND($item["calories"], 1) }}</td>
+                                <td>(calculate)</td>
+
+                                <form action="{{ route('nutrition') }}" method="post">
+                                    @csrf 
+
+                                    <input type="hidden" name="action" value="addConsumed" />
+                                    <input type="hidden" name="meal_item_id" value="{{ $item["id"] }}" />
+
+                                    <td>
+                                        <input 
+                                            type="number"
+                                            name="quantity"
+                                            value="1" 
+                                            min="1" 
+                                            max="100" 
+                                            id="qty-{{ $item["id"] }}" 
+                                            aria-label="Quantity of meal item" 
+                                            style="max-width: 50px;"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input type="submit" class="btn btn-success" value="+">
+                                    </td>
+                                </form>
+
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </section>
