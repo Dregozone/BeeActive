@@ -11,6 +11,7 @@ use App\Models\Consumed;
 use App\Models\MealItem;
 use App\Models\Rotation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Classes\MacroCalculator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -20,10 +21,22 @@ class PagesController extends Controller
     
     public function home() {
 
-        //dd( Log::all() );
-        //dd( Log::find(2) );
+        if ( auth()->user() ) { // User is logged in
 
-        return view('home');
+            $mealItemsRecorded = Consumed:: 
+                  selectRaw('SUM(quantity) AS num')
+                ->where('user_id', auth()->user()->id)
+                ->groupBy('user_id')
+                ->get()
+                ->toArray()[0]["num"];
+
+            return view('home', [
+                'mealItemsRecorded' => $mealItemsRecorded,
+            ]);
+        } else {
+
+            return view('home');
+        }        
     }
 
     public function schedule() {
@@ -87,16 +100,15 @@ class PagesController extends Controller
             ->get();
 
         $consumeds = Consumed::
-              join('meal_items', 'consumeds.meal_item_id', '=', 'meal_items.id') 
-            ->get([
-                'meal_items.img', 
-                'meal_items.name', 
-                'consumeds.quantity',
-                'meal_items.carbs',
-                'meal_items.protein',
-                'meal_items.fat',
-                'meal_items.calories',
-            ]);
+              selectRaw('
+                meal_items.img, 
+                meal_items.name, 
+                SUM(consumeds.quantity) AS quantity
+              ')
+            ->join('meal_items', 'consumeds.meal_item_id', '=', 'meal_items.id') 
+            ->whereDate('consumeds.created_at', '=', Carbon::now()->toDateString())
+            ->groupBy(['meal_items.name', 'meal_items.img'])
+            ->get();
 
         $totals = Consumed::
               selectRaw('
@@ -106,6 +118,7 @@ class PagesController extends Controller
                 SUM(consumeds.quantity * meal_items.calories) AS calories 
               ')
             ->join('meal_items', 'consumeds.meal_item_id', '=', 'meal_items.id') 
+            ->whereDate('consumeds.created_at', '=', Carbon::now()->toDateString())
             ->get()[0];
 
         return view('nutrition', [

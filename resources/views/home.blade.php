@@ -135,7 +135,7 @@
                 </div>
                 
                 <div style="margin-left: 5%;">
-                    <div>x</div>
+                    <div>{{ $mealItemsRecorded }}</div>
                     Meal items<br />recorded
                 </div>
             </div>

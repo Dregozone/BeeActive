@@ -59,7 +59,7 @@
                 </table>
             </div>
 
-            <div class="block" style="width: 55%;">
+            <div class="block" style="width: 45%; margin-left: 6%;">
                 <table style="width: 100%; text-align: center;">
                     <thead>
                         <tr>
@@ -79,7 +79,13 @@
 
                         @foreach ($consumeds as $consumed)
                             <tr>
-                                <td>{{ $consumed["img"] }}</td>
+                                <td>
+                                    @if ( file_exists('img/' . $consumed["img"] . '.png') )    
+                                        <img src="{{ asset('img/' . $consumed["img"] . '.png') }}" class="mealItemImg" alt="{{ $consumed["img"] }}" />
+                                    @else 
+                                        {{-- No img --}} 
+                                    @endif
+                                </td>
                                 <td>{{ $consumed["name"] }}</td>
                                 <td>{{ $consumed["quantity"] }}</td>
                             </tr>
@@ -155,7 +161,13 @@
 
                     @foreach ($foodItems as $item)
                         <tr>
-                            <td>{{ $item["img"] }}</td>
+                            <td>
+                                @if ( file_exists('img/' . $item["img"] . '.png') )    
+                                    <img src="{{ asset('img/' . $item["img"] . '.png') }}" class="mealItemImg" alt="{{ $item["img"] }}" />
+                                @else 
+                                    {{-- No img --}} 
+                                @endif    
+                            </td>
                             <td>{{ $item["name"] }}</td>
                             <td>{{ ROUND($item["carbs"], 1) }}</td>
                             <td>{{ ROUND($item["protein"], 1) }}</td>
