@@ -68,11 +68,20 @@ class PagesController extends Controller
 
     public function workouts() {
 
-        //
+        $workouts = Workout::
+              select('equipment')
+            ->get()
+            ->toArray();
         
         return view('workouts', [
-            'a' => '',
+            'workouts' => $workouts,
         ]);
+    }
+
+    public function addWorkout(Request $request) {
+
+        dd( $request );
+
     }
 
     public function nutrition() {

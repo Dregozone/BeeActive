@@ -17,6 +17,9 @@ Route::get('/schedule', [PagesController::class, 'schedule'])
 Route::get('/workouts', [PagesController::class, 'workouts'])
     ->middleware(['auth', 'LogRoute'])
     ->name('workouts');
+Route::post('/workouts', [PagesController::class, 'addWorkout'])
+    ->middleware(['auth', 'LogRoute'])
+    ->name('workouts');
 
 Route::get('/nutrition', [PagesController::class, 'nutrition'])
     ->middleware(['auth', 'LogRoute'])
