@@ -39,50 +39,55 @@
                     </li>
 
                     @auth
-                    <li>
-                        <a href="{{ route('schedule') }}">
-                            Schedule
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('workouts') }}">
-                            Workouts
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('nutrition') }}">
-                            Nutrition
-                        </a>
-                    </li>
+                        <li>
+                            <a href="{{ route('schedule') }}">
+                                Schedule
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('workouts') }}">
+                                Workouts
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('nutrition') }}">
+                                Nutrition
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('weight') }}">
+                                Weight
+                            </a>
+                        </li>
                     @endauth
                 </ul>
 
                 <ul>
                     @auth
-                    <li>
-                        <a href="{{ route('profile') }}">
-                            Profile
-                        </a>
-                    </li>
-                    <li>
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <button class="logoutButton" type="submit">Logout</button>
-                        </form>
-                    </li>
+                        <li>
+                            <a href="{{ route('profile') }}">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button class="logoutButton" type="submit">Logout</button>
+                            </form>
+                        </li>
                     @endauth
 
                     @guest
-                    <li>
-                        <a href="{{ route('login') }}">
-                            Login
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('register') }}">
-                            Register
-                        </a>
-                    </li>
+                        <li>
+                            <a href="{{ route('login') }}">
+                                Login
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('register') }}">
+                                Register
+                            </a>
+                        </li>
                     @endguest
                 </ul>
             </div>

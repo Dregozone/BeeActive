@@ -34,26 +34,26 @@
                     </tr>
                     <tr>
                         <th>Carbs</th>
-                        <td>{{ $carbs }}g</td>
-                        <td>{{ $used->carbs }}g</td>
-                        <td>{{ $carbs - $used->carbs }}g</td>
+                        <td>{{ ROUND($carbs, 1) }}g</td>
+                        <td>{{ ROUND($used->carbs, 1) }}g</td>
+                        <td>{{ ROUND($carbs - $used->carbs, 1) }}g</td>
                     </tr>
                     <tr>
                         <th>Protein</th>
-                        <td>{{ $protein }}g</td>
-                        <td>{{ $used->protein }}g</td>
-                        <td>{{ $protein - $used->protein }}g</td>
+                        <td>{{ ROUND($protein, 1) }}g</td>
+                        <td>{{ ROUND($used->protein, 1) }}g</td>
+                        <td>{{ ROUND($protein - $used->protein, 1) }}g</td>
                     </tr>
                     <tr>
                         <th>Fat</th>
-                        <td>{{ $fat }}g</td>
-                        <td>{{ $used->fat }}g</td>
-                        <td>{{ $fat - $used->fat }}g</td>
+                        <td>{{ ROUND($fat, 1) }}g</td>
+                        <td>{{ ROUND($used->fat, 1) }}g</td>
+                        <td>{{ ROUND($fat - $used->fat, 1) }}g</td>
                     </tr>
                     <tr>
                         <th style="border-top: 1px dotted black;">Calories</th>
                         <td style="border-top: 1px dotted black;">{{ $calories }} kcal</td>
-                        <td style="border-top: 1px dotted black;">{{ $used->calories }} kcal</td>
+                        <td style="border-top: 1px dotted black;">{{ $used->calories ?? 0 }} kcal</td>
                         <td style="border-top: 1px dotted black;">{{ $calories - $used->calories }}</td>
                     </tr>
                 </table>
@@ -99,7 +99,7 @@
 
         <hr />
 
-        <div class="block">
+        <div class="block" style="width: 84%; margin-left: 8%;">
             <h2 style="text-align: center;">
                 Add a new meal item
             </h2>
@@ -163,7 +163,7 @@
                             <th> Protein </th>
                             <th> Fat </th>
                             <th> Calories </th>
-                            <th> Status (Good|Neutral|Bad) </th>
+                            <th> Status </th>
                             <th> Quantity </th>
                             <th> Add </th>
                         </tr>
@@ -184,7 +184,35 @@
                                 <td>{{ ROUND($item["protein"], 1) }}</td>
                                 <td>{{ ROUND($item["fat"], 1) }}</td>
                                 <td>{{ ROUND($item["calories"], 1) }}</td>
-                                <td>(calculate)</td>
+                                <td>
+                                    {{-- (calculate) --}}
+                                    @if ( 
+                                        $item["carbs"] > ($carbs - $used->carbs) ||
+                                        $item["protein"] > ($protein - $used->protein) ||
+                                        $item["fat"] > ($fat - $used->fat) ||
+                                        $item["calories"] > ($calories - $used->calories)
+                                    )
+                                        <span style="color: red;">
+                                            Over allowance
+                                        </span>
+
+                                    @elseif ( 
+                                        $item["carbs"] + 30 > ($carbs - $used->carbs) ||
+                                        $item["protein"] + 30 > ($protein - $used->protein) ||
+                                        $item["fat"] + 15 > ($fat - $used->fat) ||
+                                        $item["calories"] + 350 > ($calories - $used->calories)
+                                    ) 
+                                        <span style="color: rgb(143, 71, 38);">
+                                            Getting close
+                                        </span>
+
+                                    @else 
+                                        <span style="color: darkgreen;">
+                                            Ok
+                                        </span>
+
+                                    @endif                                
+                                </td>
 
                                 <form action="{{ route('nutrition') }}" method="post">
                                     @csrf 

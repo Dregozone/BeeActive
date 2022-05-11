@@ -142,6 +142,54 @@ class PagesController extends Controller
         ]);
     }
 
+    public function weight() {
+
+        $currentWeight = 205;
+        $endGoal = 170;
+        $targetWeight = 195;
+        $daysInSchedule = 30;
+        $requiredLossPerDay = ($currentWeight - $targetWeight) / ($daysInSchedule != 0 ? $daysInSchedule : 1);
+
+        $actualWeights = [
+            210,
+            209,
+            208,
+            207,
+            206,
+            205,
+            204,
+            203,
+            202,
+            201,
+            200,
+            199,
+            198,
+            197,
+            196,
+            195,
+        ];
+
+        $projections = [];
+        for ( $day = 0; $day <= $daysInSchedule; $day++ ) {
+            $projections[$day] = [
+                'predicted' => ROUND($currentWeight - ($day * $requiredLossPerDay), 1),
+                'actual' => '',
+                'lbsFromPredicted' => '',
+                'lbsFromActual' => '',
+            ];
+        }
+
+        return view('weight', [
+            'currentWeight' => $currentWeight,
+            'endGoal' => $endGoal,
+            'targetWeight' => $targetWeight,
+            'projections' => $projections,
+            'daysInSchedule' => $daysInSchedule,
+            'requiredLossPerDay' => $requiredLossPerDay,
+            'actualWeights' => $actualWeights,
+        ]);
+    }
+
     public function nutritionInsertHandler(Request $request) {
 
         if ( $request->action == "addMealItem" ) {

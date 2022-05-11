@@ -6,8 +6,6 @@ function recordMeal(row) {
     console.log("\n Recording for " + row + ", qty: " + qty);
 }
 
-
-
 function mealItemsFilter() {
 
     var input, filter, table, tr, td, i, txtValue;

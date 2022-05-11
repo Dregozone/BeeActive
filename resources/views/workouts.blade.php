@@ -39,6 +39,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="weight">Weight (lbs):</label>
+                    <input class="form-control" type="number" id="weight" name="weight" />
+                </div>
+
+                <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Record" aria-label="Record a completed workout" />
                 </div>
 

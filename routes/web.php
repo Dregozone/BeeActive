@@ -27,6 +27,10 @@ Route::get('/nutrition', [PagesController::class, 'nutrition'])
 Route::post('/nutrition', [PagesController::class, 'nutritionInsertHandler'])
     ->middleware('LogRoute');
 
+Route::get('/weight', [PagesController::class, 'weight'])
+    ->middleware(['auth', 'LogRoute'])
+    ->name('weight');
+
 Route::get('/profile', [PagesController::class, 'profile'])
     ->middleware(['auth', 'LogRoute'])
     ->name('profile');
