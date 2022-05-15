@@ -102,6 +102,14 @@
                     {{ ROUND($requiredLossPerDay, 1) }}
                 </div>
             </div>
+
+            <hr />
+
+            <div class="row">
+                <h3 class="center">Change over time</h3>
+
+                (graph)
+            </div>
         </div>
 
     </section>
