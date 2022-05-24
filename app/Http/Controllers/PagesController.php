@@ -13,13 +13,14 @@ use App\Models\Rotation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Classes\MacroCalculator;
+use App\Models\CompletedWorkout;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
     
-    public function home() {
+    public function dashboard() {
 
         if ( auth()->user() ) { // User is logged in
 
@@ -30,12 +31,17 @@ class PagesController extends Controller
                 ->get()
                 ->toArray()[0]["num"];
 
-            return view('home', [
+            $workoutsRecorded = sizeof(CompletedWorkout:: 
+                  where('userId', Auth()->User()->id)
+                ->get());
+
+            return view('dashboard', [
                 'mealItemsRecorded' => $mealItemsRecorded,
+                'workoutsRecorded' => $workoutsRecorded,
             ]);
         } else {
 
-            return view('home');
+            return view('dashboard');
         }        
     }
 
@@ -72,16 +78,33 @@ class PagesController extends Controller
               select('equipment')
             ->get()
             ->toArray();
+
+        $completedWorkouts = CompletedWorkout:: 
+              where('userId', Auth()->User()->id) 
+            ->orderBy('created_at', 'DESC')
+            ->take(10)
+            ->get();
         
         return view('workouts', [
             'workouts' => $workouts,
+            'completedWorkouts' => $completedWorkouts,
         ]);
     }
 
     public function addWorkout(Request $request) {
 
-        dd( $request );
+        $userId = Auth()->User()->id;
 
+        CompletedWorkout::create([
+            "userId" => $userId,
+            "equipment" => $request->equipment,
+            "sets" => $request->sets,
+            "reps" => $request->reps,
+            "weight" => $request->weight,
+            "isDeleted" => false,
+        ]);
+
+        return redirect()->route('workouts')->with('success', 'Your workout was recorded successfully!');
     }
 
     public function nutrition() {

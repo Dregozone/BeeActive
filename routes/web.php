@@ -6,9 +6,9 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
-Route::get('/home', [PagesController::class, 'home'])
+Route::get('/dashboard', [PagesController::class, 'dashboard'])
     ->middleware('LogRoute')
-    ->name('home');
+    ->name('dashboard');
 
 Route::get('/schedule', [PagesController::class, 'schedule'])
     ->middleware(['auth', 'LogRoute'])
@@ -53,4 +53,4 @@ Route::post('/logout', [LogoutController::class, 'index'])
     ->middleware(['auth', 'LogRoute'])
     ->name('logout');
 
-Route::get('/', [PagesController::class, 'home']);
+Route::get('/', [PagesController::class, 'dashboard']);

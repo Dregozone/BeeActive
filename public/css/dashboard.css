@@ -54,3 +54,19 @@ h3 {
             font-size: 260%;
             font-weight: 800;
         }
+
+.macroContainer {
+    display: flex;
+}
+    .macroContainer > div {
+        border: 1px solid black;
+        width: 23%; 
+        margin: 1%;
+        padding: 1%;
+        text-align: center;
+    }
+        .macroContainer > div > h3 {
+            margin: 0 0 3% 0; 
+            padding: 0;
+            font-size: 130%;
+        }

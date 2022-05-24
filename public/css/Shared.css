@@ -85,6 +85,16 @@ button {
     text-align: right;
 }
 
+.message {
+    padding: 0.7%;
+    border: 1px solid darkgreen;
+    background:rgba(167, 212, 116, 0.63);
+    text-align: center;
+    margin-left: 35%;
+    width: 30%;
+    font-size: 130%;
+}
+
 div.form-error {
     color: rgb(180, 30, 30);
     font-size: 95%;

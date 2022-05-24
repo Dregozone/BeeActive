@@ -15,6 +15,12 @@ class CreateCompletedWorkoutsTable extends Migration
     {
         Schema::create('completed_workouts', function (Blueprint $table) {
             $table->id();
+            $table->integer("userId"); 
+            $table->string("equipment"); 
+            $table->integer("sets"); 
+            $table->integer("reps"); 
+            $table->float("weight"); 
+            $table->boolean("isDeleted"); 
             $table->timestamps();
         });
     }

@@ -1,12 +1,12 @@
 @extends('layout.app')
 
 @section('title')
-    Home
+    Dashboard
 @endsection
 
 @section('content')
     <h1>
-        Home
+        Dashboard
     </h1>
 
     @auth 
@@ -53,6 +53,35 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <h2 class="center" style="margin-top: 6%;">
+                Macros (Remaining today)
+            </h2>
+            <div>
+                
+                <div class="macroContainer">
+                    <div>
+                        <h3>Carbs</h3>
+                        ?
+                    </div>
+                    
+                    <div>
+                        <h3>Protein</h3>
+                        ?
+                    </div>
+                    
+                    <div>
+                        <h3>Fat</h3>
+                        ?
+                    </div>
+                    
+                    <div>
+                        <h3>Calories</h3>
+                        ?
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -130,7 +159,7 @@
 
             <div class="userParticipationCounts">
                 <div>
-                    <div>x</div>
+                    <div>{{ $workoutsRecorded }}</div>
                     Workouts<br />recorded
                 </div>
                 

@@ -33,8 +33,8 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('home') }}">
-                            Home
+                        <a href="{{ route('dashboard') }}">
+                            Dashboard
                         </a>
                     </li>
 
