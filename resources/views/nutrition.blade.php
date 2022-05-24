@@ -16,8 +16,8 @@
             Can record macros used by selecting meals/combinations of ingredients
         --}}
 
-        <div style="display: flex; width: 100%;">
-            <div class="block" style="width: 45%;">
+        <div class="flex" style="width: 100%;">
+            <div class="block">
                 <table style="width: 100%; text-align: center;">
                     <tr>
                         <th colspan="4">
@@ -59,7 +59,7 @@
                 </table>
             </div>
 
-            <div class="block" style="width: 45%; margin-left: 6%;">
+            <div class="block" style="margin-left: 6%;">
                 <table style="width: 100%; text-align: center;">
                     <thead>
                         <tr>

@@ -1,4 +1,8 @@
 
+.flex > div {
+    width: 96%;
+}
+
 .weightGoals {
     margin-top: 2%;
 }
@@ -7,3 +11,12 @@
         padding: 2%;
         margin: 0.5%;
     }
+
+
+@media screen and (min-width: 480px) {
+
+    .flex > div {
+        width: 48%;
+    }
+
+}

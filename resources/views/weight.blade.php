@@ -9,9 +9,9 @@
         Weight
     </h1>
 
-    <section class="container" style="display: flex; justify-content: space-evenly;">
+    <section class="container flex" style="justify-content: space-between;">
 
-        <div style="width: 52%;">
+        <div>
             <h2 class="center">Projections</h2>
             <table class="table table-sm table-striped table-hover">
                 <thead>
@@ -71,7 +71,7 @@
             </table>
         </div>
 
-        <div class="weightGoals" style="width: 40%;">
+        <div class="weightGoals">
             <div class="row">
                 <div class="col">
                     <h3>Current weight (lb)</h3>

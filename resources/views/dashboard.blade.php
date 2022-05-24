@@ -10,9 +10,9 @@
     </h1>
 
     @auth 
-    <section class="container" style="display: flex;">
+    <section class="container flex">
         
-        <div style="width: 48%; margin-right: 2%;">
+        <div style="margin-right: 2%;">
             <h2 class="center">
                 Next workouts in schedule
             </h2>
@@ -86,7 +86,7 @@
 
         </div>
 
-        <div style="width: 48%; margin-left: 2%;">
+        <div style="margin-left: 2%;">
             <h2 class="center">
                 Wall of fame
             </h2>

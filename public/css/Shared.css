@@ -11,6 +11,14 @@ body {
     background: none;
 }
 
+.flex {
+    display: flex;
+    flex-direction: column;
+}
+    .flex > div {
+        width: 96%;
+    }
+
 h1 {
     text-align: center;
     margin-top: 1%;
@@ -127,6 +135,10 @@ thead > tr {
 
 @media screen and (min-width: 480px) {
     
+    .flex {
+        flex-direction: row;
+    }
+
     nav > .container {
         flex-direction: row;
         justify-content: space-between;
