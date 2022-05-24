@@ -35,16 +35,14 @@ class PagesController extends Controller
                   where('userId', Auth()->User()->id)
                 ->get());
 
+                
+            // Todays workout
             $currentDay = (new \DateTime())->format("l");
             $currentWeek = (new \DateTime())->format("W");
             $currentRotation = ($currentWeek) % 3;
             $currentRotation = (Rotation:: 
                   where('week', $currentRotation + 1)
                 ->get()->toArray())[0];
-
-            //echo $currentRotation["sets"]; //5
-            //echo $currentRotation["reps"]; //5
-            //echo $currentRotation["weight_percent"]; //80
 
             $currentSession = (Day:: 
                   where('day', $currentDay)
@@ -74,16 +72,14 @@ class PagesController extends Controller
                 $currentSecondaryExercises = [];
             }
 
+
+            // Tomorrows workout
             $tomorrowsDay = (new \DateTime())->modify("+1 days")->format("l");
             $tomorrowsWeek = (new \DateTime())->modify("+1 days")->format("W");
             $tomorrowsRotation = ($tomorrowsWeek) % 3;
             $tomorrowsRotation = (Rotation:: 
                   where('week', $tomorrowsRotation + 1)
                 ->get()->toArray())[0];
-
-            //echo $tomorrowsRotation["sets"]; //5
-            //echo $tomorrowsRotation["reps"]; //5
-            //echo $tomorrowsRotation["weight_percent"]; //80
 
             $tomorrowsSession = (Day:: 
                  where('day', $tomorrowsDay)
