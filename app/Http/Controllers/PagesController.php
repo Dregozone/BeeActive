@@ -29,7 +29,8 @@ class PagesController extends Controller
                 ->where('user_id', auth()->user()->id)
                 ->groupBy('user_id')
                 ->get()
-                ->toArray()[0]["num"];
+                ->toArray();
+            $mealItemsRecorded = isset($mealItemsRecorded[0]) ? $mealItemsRecorded[0]["num"] : 0;
 
             $workoutsRecorded = sizeof(CompletedWorkout:: 
                   where('userId', Auth()->User()->id)
