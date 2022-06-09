@@ -52,9 +52,9 @@
                     </tr>
                     <tr>
                         <th style="border-top: 1px dotted black;">Calories</th>
-                        <td style="border-top: 1px dotted black;">{{ $calories }} kcal</td>
-                        <td style="border-top: 1px dotted black;">{{ $used->calories ?? 0 }} kcal</td>
-                        <td style="border-top: 1px dotted black;">{{ $calories - $used->calories }}</td>
+                        <td style="border-top: 1px dotted black;">{{ ROUND($calories, 1) }} kcal</td>
+                        <td style="border-top: 1px dotted black;">{{ ROUND($used->calories, 1) ?? 0 }} kcal</td>
+                        <td style="border-top: 1px dotted black;">{{ ROUND($calories - $used->calories, 1) }}</td>
                     </tr>
                 </table>
             </div>

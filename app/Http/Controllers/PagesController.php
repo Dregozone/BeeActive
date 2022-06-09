@@ -19,7 +19,9 @@ use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
-    
+    private $expectedWeight = 200;
+    private $expectedGoal = "Cutting";
+
     public function dashboard() {
 
         if ( auth()->user() ) { // User is logged in
@@ -110,6 +112,53 @@ class PagesController extends Controller
                 $tomorrowsSecondaryExercises = [];
             }
 
+
+            // Personal bests
+            $pb = CompletedWorkout::
+                  where([
+                      ['userId', auth()->user()->id],
+                      ['equipment', 'like', '(Ben.) %'],
+                      ['isDeleted', false],
+                  ])
+                ->selectRaw('MAX(weight) AS lbs, equipment')
+                ->groupBy('equipment')
+                ->get()
+                ->toArray();
+            $pbs = [];
+            foreach ( $pb as $item ) {
+                $pbs[$item['equipment']] = $item['lbs'];
+            }
+            $pbOrder = [
+                'Overhead press',
+                'Bench press',
+                'Squat',
+                'Deadlift',
+            ];
+
+            // Daily macros remaining 
+            $calculator = new MacroCalculator();
+
+            $calculator->setWeightLbs($this->expectedWeight);
+            $calculator->setGoal($this->expectedGoal);
+    
+            $calculator->findMacros();
+    
+            $carbs = $calculator->getCarbs();
+            $protein = $calculator->getProtein();
+            $fat = $calculator->getFat();
+            $calories = $calculator->getCalories();
+
+            $used = Consumed::
+                  selectRaw('
+                    SUM(consumeds.quantity * meal_items.carbs) AS carbs, 
+                    SUM(consumeds.quantity * meal_items.protein) AS protein, 
+                    SUM(consumeds.quantity * meal_items.fat) AS fat, 
+                    SUM(consumeds.quantity * meal_items.calories) AS calories 
+                    ')
+                ->join('meal_items', 'consumeds.meal_item_id', '=', 'meal_items.id') 
+                ->whereDate('consumeds.created_at', '=', Carbon::now()->toDateString())
+                ->get()[0];
+
             return view('dashboard', [
                 'mealItemsRecorded' => $mealItemsRecorded,
                 'workoutsRecorded' => $workoutsRecorded,
@@ -128,6 +177,15 @@ class PagesController extends Controller
                 'tomorrowsDay' => $tomorrowsDay,
                 'tomorrowsPrimaryExercises' => $tomorrowsPrimaryExercises,
                 'tomorrowsSecondaryExercises' => $tomorrowsSecondaryExercises,
+
+                'pbs' => $pbs,
+                'pbOrder' => $pbOrder,
+
+                'carbs' => $carbs,
+                'protein' => $protein,
+                'fat' => $fat,
+                'calories' => $calories,
+                'used' => $used,
             ]);
         } else {
 
@@ -201,11 +259,8 @@ class PagesController extends Controller
 
         $calculator = new MacroCalculator();
 
-        $expectedWeight = 200;
-        $expectedGoal = "Cutting";
-
-        $calculator->setWeightLbs($expectedWeight);
-        $calculator->setGoal($expectedGoal);
+        $calculator->setWeightLbs($this->expectedWeight);
+        $calculator->setGoal($this->expectedGoal);
 
         $calculator->findMacros();
 

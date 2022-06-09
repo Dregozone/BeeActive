@@ -127,22 +127,22 @@
                 <div class="macroContainer">
                     <div>
                         <h3>Carbs</h3>
-                        ?
+                        {{ ROUND($carbs - $used->carbs, 1) }}g 
                     </div>
                     
                     <div>
                         <h3>Protein</h3>
-                        ?
+                        {{ ROUND($protein - $used->protein, 1) }}g 
                     </div>
                     
                     <div>
                         <h3>Fat</h3>
-                        ?
+                        {{ ROUND($fat - $used->fat, 1) }}g 
                     </div>
                     
                     <div>
                         <h3>Calories</h3>
-                        ?
+                        {{ ROUND($calories - $used->calories, 1) }} kcal 
                     </div>
                 </div>
 
@@ -157,25 +157,13 @@
 
             <h3>Personal Records</h3>
             <div class="personalRecords">
-                <div>
-                    <h4>Overhead press</h4>
-                    ? lbs / ? kg
-                </div>
-
-                <div>
-                    <h4>Bench press</h4>
-                    ? lbs / ? kg
-                </div>
-
-                <div>
-                    <h4>Squat</h4>
-                    ? lbs / ? kg
-                </div>
-
-                <div>
-                    <h4>Deadlift</h4>
-                    ? lbs / ? kg
-                </div>
+                @foreach ($pbOrder as $type)
+                    <div>
+                        <h4>{{ $type }}</h4>
+                        {{ isset($pbs['(Ben.) ' . $type]) ? ROUND($pbs['(Ben.) ' . $type], 1) : '?' }} lbs / 
+                        {{ isset($pbs['(Ben.) ' . $type]) ? ROUND($pbs['(Ben.) ' . $type] / 2.2, 1) : '?' }} kg
+                    </div>
+                @endforeach 
             </div>
 
             <h3 style="margin-top: 30px;">Achievements</h3>
