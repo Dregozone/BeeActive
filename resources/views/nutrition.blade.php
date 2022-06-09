@@ -80,7 +80,10 @@
                         @foreach ($consumeds as $consumed)
                             <tr>
                                 <td>
-                                    @if ( file_exists('img/' . $consumed["img"] . '.png') )    
+                                    @if ( 
+                                        file_exists('img/' . $consumed["img"] . '.png') ||  
+                                        file_exists('public/img/' . $consumed["img"] . '.png')
+                                    )    
                                         <img src="{{ asset('img/' . $consumed["img"] . '.png') }}" class="mealItemImg" alt="{{ $consumed["img"] }}" />
                                     @else 
                                         <img src="{{ asset('img/missing.png') }}" class="mealItemImg" alt="Missing image" />
@@ -173,7 +176,10 @@
                         @foreach ($foodItems as $item)
                             <tr>
                                 <td>
-                                    @if ( file_exists('img/' . $item["img"] . '.png') )    
+                                    @if ( 
+                                        file_exists('img/' . $item["img"] . '.png') || 
+                                        file_exists('public/img/' . $item["img"] . '.png')
+                                    )    
                                         <img src="{{ asset('img/' . $item["img"] . '.png') }}" class="mealItemImg" alt="{{ $item["img"] }}" />
                                     @else 
                                         <img src="{{ asset('img/missing.png') }}" class="mealItemImg" alt="Missing image" />

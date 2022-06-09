@@ -14,11 +14,17 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/shared.css') }}" />
 
-        @if ( file_exists('css/' . Route::currentRouteName() . '.css') )
+        @if ( 
+            file_exists('css/' . Route::currentRouteName() . '.css') || 
+            file_exists('public/css/' . Route::currentRouteName() . '.css')
+        )
             <link rel="stylesheet" href="{{ asset('css/' . Route::currentRouteName() . '.css') }}" />
         @endif 
 
-        @if ( file_exists('js/' . Route::currentRouteName() . '.js') )
+        @if ( 
+            file_exists('js/' . Route::currentRouteName() . '.js') || 
+            file_exists('public/js/' . Route::currentRouteName() . '.js')
+        )
             <script src="{{ asset('js/' . Route::currentRouteName() . '.js') }}"></script>
         @endif 
 
