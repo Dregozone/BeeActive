@@ -10,6 +10,7 @@ use App\Models\Workout;
 use App\Models\Consumed;
 use App\Models\MealItem;
 use App\Models\Rotation;
+use App\Models\Achievement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Classes\MacroCalculator;
@@ -159,6 +160,23 @@ class PagesController extends Controller
                 ->whereDate('consumeds.created_at', '=', Carbon::now()->toDateString())
                 ->get()[0];
 
+            $achievements = Achievement::
+                  join('completed_workouts', 'achievements.satisfied_by_item', '=', 'completed_workouts.equipment')
+                ->selectRaw('
+                    achievements.name, 
+                    achievements.img,
+                    achievements.details,
+                    achievements.satisfied_by_amount,
+                    MAX(completed_workouts.weight) AS pb
+                ')
+                ->where([
+                    ['userId', auth()->user()->id],
+                    ['isDeleted', 0],
+                ])
+                ->groupBy('achievements.name', 'achievements.img', 'achievements.details', 'achievements.satisfied_by_amount')
+                //->orderBy('', 'ASC')
+                ->get();
+
             return view('dashboard', [
                 'mealItemsRecorded' => $mealItemsRecorded,
                 'workoutsRecorded' => $workoutsRecorded,
@@ -186,6 +204,8 @@ class PagesController extends Controller
                 'fat' => $fat,
                 'calories' => $calories,
                 'used' => $used,
+
+                'achievements' => $achievements,
             ]);
         } else {
 

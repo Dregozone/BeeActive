@@ -168,45 +168,25 @@
 
             <h3 style="margin-top: 30px;">Achievements</h3>
             <div class="achievements">
-                <div>
-                    <h4>Ach. x</h4>
-                    ...
-                </div>
 
-                <div>
-                    <h4>Ach. x</h4>
-                    ...
-                </div>
+                @foreach ( $achievements as $achievement )
+                    <div @if ( $achievement->pb < $achievement->satisfied_by_amount ) style="cursor: no-drop; background: rgba(0, 0, 0, 0.25);" @endif title="{{ $achievement->details }}">
+                        <h4>{{ $achievement->name }}</h4>
+                        
+                        <img src="{{ $achievement->img }}" style="max-width: 200px; max-height: 100px;" />
 
-                <div>
-                    <h4>Ach. x</h4>
-                    ...
-                </div>
+                        @if ( $achievement->pb < $achievement->satisfied_by_amount )
+                            <p>
+                                {{ ROUND($achievement->pb, 1) }} / {{ ROUND($achievement->satisfied_by_amount, 1) }}
+                            </p>
+                        @else 
+                            <p>
+                                Achieved
+                            </p>
+                        @endif
+                    </div>
+                @endforeach 
 
-                <div>
-                    <h4>Ach. x</h4>
-                    ...
-                </div>
-
-                <div>
-                    <h4>Ach. x</h4>
-                    ...
-                </div>
-
-                <div>
-                    <h4>Ach. x</h4>
-                    ...
-                </div>
-
-                <div>
-                    <h4>Ach. x</h4>
-                    ...
-                </div>
-
-                <div>
-                    <h4>Ach. x</h4>
-                    ...
-                </div>
             </div>
 
             <div class="userParticipationCounts">

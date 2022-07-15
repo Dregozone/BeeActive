@@ -10,6 +10,7 @@ use Database\Seeders\ConsumedsSeeder;
 use Database\Seeders\MealItemsSeeder;
 use Database\Seeders\RotationsSeeder;
 use Database\Seeders\SharedLogsSeeder;
+use Database\Seeders\AchievementsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,11 +22,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //$this->call(SharedLogsSeeder::class);
-        $this->call(RotationsSeeder::class);
-        $this->call(WorkoutsSeeder::class);
-        $this->call(SessionsSeeder::class);
-        $this->call(DaysSeeder::class);
+        //$this->call(RotationsSeeder::class);
+        //$this->call(WorkoutsSeeder::class);
+        //$this->call(SessionsSeeder::class);
+        //$this->call(DaysSeeder::class);
         //$this->call(MealItemsSeeder::class);
-        $this->call(ConsumedsSeeder::class);
+        //$this->call(ConsumedsSeeder::class);
+        $this->call(AchievementsSeeder::class);
     }
 }

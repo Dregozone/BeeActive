@@ -1,0 +1,73 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Achievement;
+use Illuminate\Database\Seeder;
+
+class AchievementsSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $toAdd = [
+            [
+                'name' => 'Bench press 225lb (2 plates)',
+                'img' => 'benchPress.jpg',
+                'details' => '1RM 100kg/220lb',
+                'satisfied_by_item' => '(Ben.) Bench press',
+                'satisfied_by_amount' => 220.0,
+            ],
+            [
+                'name' => 'Overhead press 135lb (1 plate)',
+                'img' => 'overheadPress.jpg',
+                'details' => '1RM 50kg/110lb',
+                'satisfied_by_item' => '(Ben.) Overhead press',
+                'satisfied_by_amount' => 110.0,
+            ],
+            [
+                'name' => 'Squat 225lb (2 plates)',
+                'img' => 'squat.jpg',
+                'details' => '1RM 100kg/220lb',
+                'satisfied_by_item' => '(Ben.) Squat',
+                'satisfied_by_amount' => 220.0,
+            ],
+            [
+                'name' => 'Squat 315lb (3 plates)',
+                'img' => 'squat.jpg',
+                'details' => '1RM 143kg/330lb',
+                'satisfied_by_item' => '(Ben.) Squat',
+                'satisfied_by_amount' => 315.0,
+            ],
+            [
+                'name' => 'Deadlift 405lb (4 plates)',
+                'img' => 'deadlift.jpg',
+                'details' => '1RM 184kg/405lb',
+                'satisfied_by_item' => '(Ben.) Deadlift',
+                'satisfied_by_amount' => 405.0,
+            ],
+            [
+                'name' => 'Deadlift 315lb (3 plates)',
+                'img' => 'deadlift.jpg',
+                'details' => '1RM 143kg/330lb',
+                'satisfied_by_item' => '(Ben.) Deadlift',
+                'satisfied_by_amount' => 315.0,
+            ],
+            [
+                'name' => 'Deadlift 225lb (2 plates)',
+                'img' => 'deadlift.jpg',
+                'details' => '1RM 100kg/220lb',
+                'satisfied_by_item' => '(Ben.) Deadlift',
+                'satisfied_by_amount' => 220.0,
+            ],
+        ];
+
+        foreach ( $toAdd as $details ) {
+            Achievement::create($details);
+        }
+    }
+}
