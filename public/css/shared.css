@@ -133,7 +133,7 @@ thead > tr {
     border-top: 2px solid rgb(168, 145, 39);
   }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 980px) {
     
     .flex {
         flex-direction: row;
@@ -148,5 +148,4 @@ thead > tr {
         flex-direction: row;
         justify-content: space-around;
     }
-
 }
