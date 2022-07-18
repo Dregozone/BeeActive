@@ -173,7 +173,7 @@
                     <div @if ( $achievement->pb < $achievement->satisfied_by_amount ) style="cursor: no-drop; background: rgba(0, 0, 0, 0.25);" @endif title="{{ $achievement->details }}">
                         <h4>{{ $achievement->name }}</h4>
                         
-                        <img src="{{ $achievement->img }}" style="max-width: 200px; max-height: 100px;" />
+                        <img src="{{ asset('img/' . $achievement->img) }}" style="max-width: 180px; max-height: 90px; border-radius: 9px; opacity: 0.7;" />
 
                         @if ( $achievement->pb < $achievement->satisfied_by_amount )
                             <p>
