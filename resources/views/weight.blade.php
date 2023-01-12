@@ -107,42 +107,31 @@
             <hr />
 
             <div class="row">
-                {{-- <h3 class="center">Change over time</h3> --}}
-
                 <div id="chartContainer" style="padding: 0; height: 300px; width: 100%;"></div>
             </div>
         </div>
-
     </section>
-
-    <?php 
-        echo "
-            <script>
-                var graphDataString = '" . $graphDataString . "';
-            </script>
-        ";
-    ?>
 
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
         window.onload = function () {
-
-            console.log(graphDataString);
-
             var chart = new CanvasJS.Chart("chartContainer", {
                 title:{
                     text: "Change in weight over time"              
                 },
                 data: [              
                 {
-                    // Change type to "doughnut", "line", "splineArea", etc.
-                    type: "column",
+                    type: "line",
                     dataPoints: [
-                        { label: "apple",  y: 10  },
-                        { label: "orange", y: 15  },
-                        { label: "banana", y: 25  },
-                        { label: "mango",  y: 30  },
-                        { label: "grape",  y: 28  }
+                        <?php 
+                            foreach ( $graphDatas as $graphData ) {
+                                echo '{ label: "' . $graphData["label"] . '", y: ' . $graphData["y"] . ' }';
+
+                                if ( $graphData["label"] < sizeof($graphDatas) ) {
+                                    echo ',';
+                                }
+                            }
+                        ?>
                     ]
                 }
                 ]

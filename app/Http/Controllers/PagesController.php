@@ -371,16 +371,13 @@ class PagesController extends Controller
         }
 
         // Graph data
-        $graphDataString = '';
+        $graphDatas = [];
         $i = 1;
         foreach ( $bodyWeights as $data ) {
-            $graphDataString .= '{label: "' . $i . '", y: ' . ROUND($data->weight_in_lbs, 0) . '},';
+            $graphDatas[] = ["label" => $i, "y" => ROUND($data->weight_in_lbs, 1)];
             $i++;
         }
         
-        $graphDataString = rtrim($graphDataString, ',');
-        // dd($graphDataString);
-
         return view('weight', [
             'currentWeight' => $currentWeight,
             'endGoal' => $endGoal,
@@ -391,7 +388,7 @@ class PagesController extends Controller
             'bodyWeights' => $bodyWeights,
             'numToShow' => $numToShow,
             'milestoneDateText' => $milestoneDateText,
-            'graphDataString' => $graphDataString,
+            'graphDatas' => $graphDatas,
         ]);
     }
 
