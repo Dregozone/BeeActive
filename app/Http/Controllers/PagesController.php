@@ -361,13 +361,13 @@ class PagesController extends Controller
 
             $requiredLossPerDay = ($currentWeight - $targetWeight) / ($daysInSchedule != 0 ? $daysInSchedule : 1);
         } else { // No body weight goals have yet been set for this user
-            $currentWeight = 'TBC';
-            $endGoal = 'TBC';
-            $targetWeight = 'TBC';
-            $milestoneDate = 'TBC';
-            $milestoneDateText = 'TBC';
-            $daysInSchedule = 'TBC';
-            $requiredLossPerDay = 'TBC';
+            $currentWeight = 0;
+            $endGoal = 0;
+            $targetWeight = 0;
+            $milestoneDate = '25-12-2030';
+            $milestoneDateText = '25-12-2030';
+            $daysInSchedule = 999;
+            $requiredLossPerDay = 0;
         }
 
         /*
