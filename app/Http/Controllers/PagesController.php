@@ -344,19 +344,31 @@ class PagesController extends Controller
             ->take($numToShow)
             ->get();
 
-        $bodyWeightGoals = BodyWeightGoals::where('user_id', $userId)->first();
+        $bodyWeightGoals = BodyWeightGoals::where('user_id', $userId)->get();
 
-        $currentWeight = ROUND($bodyWeightGoals->start_weight, 1);
-        $endGoal = ROUND($bodyWeightGoals->end_goal_weight, 1);
-        $targetWeight = ROUND($bodyWeightGoals->milestone_goal_weight, 1);
+        if ( sizeof($bodyWeightGoals) > 0 ) { // There is a body weight goal set for this user
+            $bodyWeightGoals = $bodyWeightGoals[0];
+            
+            $currentWeight = ROUND($bodyWeightGoals->start_weight, 1);
+            $endGoal = ROUND($bodyWeightGoals->end_goal_weight, 1);
+            $targetWeight = ROUND($bodyWeightGoals->milestone_goal_weight, 1);
 
-        $now = new \DateTime();
-        $milestoneDate = new \DateTime($bodyWeightGoals->milestone_date);
-        $milestoneDateText = $bodyWeightGoals->milestone_date;
-        
-        $daysInSchedule = (int)$now->diff($milestoneDate)->format("%r%a");
+            $now = new \DateTime();
+            $milestoneDate = new \DateTime($bodyWeightGoals->milestone_date);
+            $milestoneDateText = $bodyWeightGoals->milestone_date;
+            
+            $daysInSchedule = (int)$now->diff($milestoneDate)->format("%r%a");
 
-        $requiredLossPerDay = ($currentWeight - $targetWeight) / ($daysInSchedule != 0 ? $daysInSchedule : 1);
+            $requiredLossPerDay = ($currentWeight - $targetWeight) / ($daysInSchedule != 0 ? $daysInSchedule : 1);
+        } else { // No body weight goals have yet been set for this user
+            $currentWeight = 'TBC';
+            $endGoal = 'TBC';
+            $targetWeight = 'TBC';
+            $milestoneDate = 'TBC';
+            $milestoneDateText = 'TBC';
+            $daysInSchedule = 'TBC';
+            $requiredLossPerDay = 'TBC';
+        }
 
         $actualWeights = [
             210,
