@@ -41,69 +41,6 @@
     <hr />
 
     <section class="container flex" style="justify-content: space-between;">
-
-        {{-- 
-        <div>
-            <h2 class="center">Projections</h2>
-            <table class="table table-sm table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 18%;">Days from now</th>
-                        <th style="width: 23%;">Predicted weight (lb)</th>
-                        <th style="width: 20%;">Actual weight (lb)</th>
-                        <th style="width: 20%;">lbs from predicted</th>
-                        <th style="width: 19%;">lbs from target</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach ( $projections as $daysFromNow => $projection )
-                        <tr>
-                            <td>{{ $daysFromNow }}</td>
-                            <td>{{ $projection["predicted"] }}</td>
-                            <td>
-                                <input 
-                                    class="form-control" 
-                                    type="number" 
-                                    step="0.1" 
-                                    name="actual-{{ $daysFromNow }}" 
-                                    id="actual-{{ $daysFromNow }}" 
-                                    aria-label="Actual weight value"
-                                    value="{{ $actualWeights[$daysFromNow] ?? 0 }}"
-                                >    
-                            </td>
-                            <td>
-                                @if ( 
-                                    isset($actualWeights[$daysFromNow]) && 
-                                    ROUND(($actualWeights[$daysFromNow] ?? 0) - $projection["predicted"], 1) > 0  
-                                )
-                                    <span style="color: rgb(131, 28, 10);">
-                                        {{ ROUND(($actualWeights[$daysFromNow] ?? 0) - $projection["predicted"], 1) }}
-                                    </span>
-
-                                @elseif (
-                                    isset($actualWeights[$daysFromNow]) && 
-                                    ROUND(($actualWeights[$daysFromNow] ?? 0) - $projection["predicted"], 1) < 0  
-                                ) 
-                                    <span style="color: green;">
-                                        {{ ROUND(($actualWeights[$daysFromNow] ?? 0) - $projection["predicted"], 1) }}
-                                    </span>
-
-                                @endif    
-                            </td>
-                            <td>
-                                @if ( isset($actualWeights[$daysFromNow]) )
-                                    {{ ROUND(($actualWeights[$daysFromNow] ?? 0) - $targetWeight, 1) }}
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach 
-
-                </tbody>
-            </table>
-        </div>
-        --}} 
-
         <div>
             <h2 class="center">
                 Recent {{ $numToShow }}
@@ -170,11 +107,47 @@
             <hr />
 
             <div class="row">
-                <h3 class="center">Change over time</h3>
+                {{-- <h3 class="center">Change over time</h3> --}}
 
-                (graph)
+                <div id="chartContainer" style="padding: 0; height: 300px; width: 100%;"></div>
             </div>
         </div>
 
     </section>
+
+    <?php 
+        echo "
+            <script>
+                var graphDataString = '" . $graphDataString . "';
+            </script>
+        ";
+    ?>
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            console.log(graphDataString);
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title:{
+                    text: "Change in weight over time"              
+                },
+                data: [              
+                {
+                    // Change type to "doughnut", "line", "splineArea", etc.
+                    type: "column",
+                    dataPoints: [
+                        { label: "apple",  y: 10  },
+                        { label: "orange", y: 15  },
+                        { label: "banana", y: 25  },
+                        { label: "mango",  y: 30  },
+                        { label: "grape",  y: 28  }
+                    ]
+                }
+                ]
+            });
+            chart.render();
+        }
+    </script>
 @endsection

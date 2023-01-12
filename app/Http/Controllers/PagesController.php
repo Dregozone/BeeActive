@@ -370,39 +370,28 @@ class PagesController extends Controller
             $requiredLossPerDay = 0;
         }
 
-        /*
-        $actualWeights = [
-            210,
-            209,
-            198,
-            197,
-            196,
-            195,
-        ];
-        
-        $projections = [];
-        for ( $day = 0; $day <= $daysInSchedule; $day++ ) {
-            $projections[$day] = [
-                'predicted' => ROUND($currentWeight - ($day * $requiredLossPerDay), 1),
-                'actual' => '',
-                'lbsFromPredicted' => '',
-                'lbsFromActual' => '',
-            ];
+        // Graph data
+        $graphDataString = '';
+        $i = 1;
+        foreach ( $bodyWeights as $data ) {
+            $graphDataString .= '{label: "' . $i . '", y: ' . ROUND($data->weight_in_lbs, 0) . '},';
+            $i++;
         }
-        */
+        
+        $graphDataString = rtrim($graphDataString, ',');
+        // dd($graphDataString);
 
         return view('weight', [
             'currentWeight' => $currentWeight,
             'endGoal' => $endGoal,
             'targetWeight' => $targetWeight,
-            //'projections' => $projections,
             'daysInSchedule' => $daysInSchedule,
             'requiredLossPerDay' => $requiredLossPerDay,
-            //'actualWeights' => $actualWeights,
 
             'bodyWeights' => $bodyWeights,
             'numToShow' => $numToShow,
             'milestoneDateText' => $milestoneDateText,
+            'graphDataString' => $graphDataString,
         ]);
     }
 
