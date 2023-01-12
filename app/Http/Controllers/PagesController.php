@@ -348,7 +348,7 @@ class PagesController extends Controller
 
         if ( sizeof($bodyWeightGoals) > 0 ) { // There is a body weight goal set for this user
             $bodyWeightGoals = $bodyWeightGoals[0];
-            
+
             $currentWeight = ROUND($bodyWeightGoals->start_weight, 1);
             $endGoal = ROUND($bodyWeightGoals->end_goal_weight, 1);
             $targetWeight = ROUND($bodyWeightGoals->milestone_goal_weight, 1);
@@ -370,6 +370,7 @@ class PagesController extends Controller
             $requiredLossPerDay = 'TBC';
         }
 
+        /*
         $actualWeights = [
             210,
             209,
@@ -378,7 +379,7 @@ class PagesController extends Controller
             196,
             195,
         ];
-
+        
         $projections = [];
         for ( $day = 0; $day <= $daysInSchedule; $day++ ) {
             $projections[$day] = [
@@ -388,15 +389,16 @@ class PagesController extends Controller
                 'lbsFromActual' => '',
             ];
         }
+        */
 
         return view('weight', [
             'currentWeight' => $currentWeight,
             'endGoal' => $endGoal,
             'targetWeight' => $targetWeight,
-            'projections' => $projections,
+            //'projections' => $projections,
             'daysInSchedule' => $daysInSchedule,
             'requiredLossPerDay' => $requiredLossPerDay,
-            'actualWeights' => $actualWeights,
+            //'actualWeights' => $actualWeights,
 
             'bodyWeights' => $bodyWeights,
             'numToShow' => $numToShow,
