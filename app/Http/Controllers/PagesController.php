@@ -10,10 +10,12 @@ use App\Models\Workout;
 use App\Models\Consumed;
 use App\Models\MealItem;
 use App\Models\Rotation;
+use App\Models\BodyWeight;
 use App\Models\Achievement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Classes\MacroCalculator;
+use App\Models\BodyWeightGoals;
 use App\Models\CompletedWorkout;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -332,25 +334,33 @@ class PagesController extends Controller
 
     public function weight() {
 
-        $currentWeight = 205;
-        $endGoal = 170;
-        $targetWeight = 195;
-        $daysInSchedule = 30;
+        $numToShow = 10;
+
+        $userId = Auth::user()->id;
+        
+        $bodyWeights = BodyWeight::
+              where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->take($numToShow)
+            ->get();
+
+        $bodyWeightGoals = BodyWeightGoals::where('user_id', $userId)->first();
+
+        $currentWeight = ROUND($bodyWeightGoals->start_weight, 1);
+        $endGoal = ROUND($bodyWeightGoals->end_goal_weight, 1);
+        $targetWeight = ROUND($bodyWeightGoals->milestone_goal_weight, 1);
+
+        $now = new \DateTime();
+        $milestoneDate = new \DateTime($bodyWeightGoals->milestone_date);
+        $milestoneDateText = $bodyWeightGoals->milestone_date;
+        
+        $daysInSchedule = (int)$now->diff($milestoneDate)->format("%r%a");
+
         $requiredLossPerDay = ($currentWeight - $targetWeight) / ($daysInSchedule != 0 ? $daysInSchedule : 1);
 
         $actualWeights = [
             210,
             209,
-            208,
-            207,
-            206,
-            205,
-            204,
-            203,
-            202,
-            201,
-            200,
-            199,
             198,
             197,
             196,
@@ -375,7 +385,72 @@ class PagesController extends Controller
             'daysInSchedule' => $daysInSchedule,
             'requiredLossPerDay' => $requiredLossPerDay,
             'actualWeights' => $actualWeights,
+
+            'bodyWeights' => $bodyWeights,
+            'numToShow' => $numToShow,
+            'milestoneDateText' => $milestoneDateText,
         ]);
+    }
+
+    public function record_weight(Request $request) {
+
+        BodyWeight::create([
+            'user_id' => Auth::user()->id,
+            'weight_in_lbs' => $request->weight,
+        ]);
+
+        return redirect()->route('weight')->with('success', 'New weight recorded');
+    }
+
+    public function body_weight_goals() {
+
+        $userId = Auth::user()->id;
+
+        $existingBodyWeightGoal = BodyWeightGoals::where('user_id', $userId)->get()->toArray();
+
+        if ( sizeof($existingBodyWeightGoal) == 0 ) { // This user hasnt yet set any goals
+            // Provide some defaults
+            $existingBodyWeightGoal = [
+                'start_weight' => 0,
+                'end_goal_weight' => 0,
+                'milestone_goal_weight' => 0,
+                'milestone_date' => '',
+            ];
+        } else {
+            $existingBodyWeightGoal = $existingBodyWeightGoal[0];
+        }
+
+        return view('edit_body_weight_goals', [
+            'existingBodyWeightGoal' => $existingBodyWeightGoal,
+        ]);
+    }
+
+    public function save_body_weight_goals(Request $request) {
+
+        $userId = Auth::user()->id;
+
+        $existingBodyWeightGoal = BodyWeightGoals::where('user_id', $userId)->get();
+
+        if ( sizeof($existingBodyWeightGoal) > 0 ) {
+            // This user already has goals set, update them
+            $existingBodyWeightGoal[0]->update([
+                'start_weight' => $request->startWeight,
+                'end_goal_weight' => $request->endGoalWeight,
+                'milestone_goal_weight' => $request->milestoneGoalWeight,
+                'milestone_date' => $request->milestoneDate,
+            ]);
+        } else {
+            // This user hasnt yet set their goals, create them
+            BodyWeightGoals::create([
+                'user_id' => $userId,
+                'start_weight' => $request->startWeight,
+                'end_goal_weight' => $request->endGoalWeight,
+                'milestone_goal_weight' => $request->milestoneGoalWeight,
+                'milestone_date' => $request->milestoneDate,
+            ]);
+        }
+
+        return redirect()->route('weight')->with('success', 'New goals saved!');
     }
 
     public function nutritionInsertHandler(Request $request) {

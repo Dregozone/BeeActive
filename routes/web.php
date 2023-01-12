@@ -30,6 +30,16 @@ Route::post('/nutrition', [PagesController::class, 'nutritionInsertHandler'])
 Route::get('/weight', [PagesController::class, 'weight'])
     ->middleware(['auth', 'LogRoute'])
     ->name('weight');
+Route::post('/weight', [PagesController::class, 'record_weight'])
+    ->middleware(['auth', 'LogRoute'])
+    ->name('record_weight');
+
+Route::get('/body_weight_goals', [PagesController::class, 'body_weight_goals'])
+    ->middleware(['auth', 'LogRoute'])
+    ->name('body_weight_goals');
+Route::post('/body_weight_goals', [PagesController::class, 'save_body_weight_goals'])
+    ->middleware(['auth', 'LogRoute'])
+    ->name('save_body_weight_goals');
 
 Route::get('/profile', [PagesController::class, 'profile'])
     ->middleware(['auth', 'LogRoute'])

@@ -57,10 +57,7 @@
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Record" aria-label="Record a completed workout" />
                 </div>
-
             </form>
-
-
         </div>
 
         <hr />
