@@ -373,8 +373,9 @@ class PagesController extends Controller
         // Graph data
         $graphDatas = [];
         $i = 1;
-        foreach ( $bodyWeights as $data ) {
-            $graphDatas[] = ["label" => $i, "y" => ROUND($data->weight_in_lbs, 1)];
+
+        foreach ( array_reverse($bodyWeights->toArray()) as $data ) { // Reverse to show most recent entry on right
+            $graphDatas[] = ["label" => $i, "y" => ROUND($data["weight_in_lbs"], 1)];
             $i++;
         }
         
