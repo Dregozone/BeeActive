@@ -349,6 +349,8 @@ class PagesController extends Controller
         if ( sizeof($bodyWeightGoals) > 0 ) { // There is a body weight goal set for this user
             $bodyWeightGoals = $bodyWeightGoals[0];
 
+            $startDate = $bodyWeightGoals->created_at->format("Y-m-d");
+
             $currentWeight = ROUND($bodyWeightGoals->start_weight, 1);
             $endGoal = ROUND($bodyWeightGoals->end_goal_weight, 1);
             $targetWeight = ROUND($bodyWeightGoals->milestone_goal_weight, 1);
@@ -361,11 +363,12 @@ class PagesController extends Controller
 
             $requiredLossPerDay = ($currentWeight - $targetWeight) / ($daysInSchedule != 0 ? $daysInSchedule : 1);
         } else { // No body weight goals have yet been set for this user
+            $startDate = '01-01-1900';
             $currentWeight = 0;
             $endGoal = 0;
             $targetWeight = 0;
-            $milestoneDate = '25-12-2030';
-            $milestoneDateText = '25-12-2030';
+            $milestoneDate = '2030-12-25';
+            $milestoneDateText = '2030-12-25';
             $daysInSchedule = 999;
             $requiredLossPerDay = 0;
         }
@@ -407,6 +410,7 @@ class PagesController extends Controller
             'graphDatas' => $graphDatas,
 
             'recentLossPerDay' => $recentLossPerDay,
+            'startDate' => $startDate,
         ]);
     }
 

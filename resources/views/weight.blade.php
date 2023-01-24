@@ -76,7 +76,7 @@
             <div class="row">
                 <div class="col">
                     <h3 title="This is when you set this goal">Start date</h3>
-
+                    {{ $startDate }}
                 </div>
 
                 <div class="col">
@@ -90,18 +90,18 @@
                     &darr;<br />
                     To lose 
                     <span style="font-weight: 600;">{{ $currentWeight - $targetWeight }} lbs</span> 
-                    in 
+                    in the next 
                     <span style="font-weight: 600;">{{ $daysInSchedule }} days</span> 
                     requires an avg. loss of 
                     <span style="font-weight: 600;">{{ ROUND($requiredLossPerDay, 1) }} lbs / day</span>.<br />
 
                     <span 
-                        @if ( $recentLossPerDay > 0 )
+                        @if ( $recentLossPerDay > (ROUND($requiredLossPerDay, 1) * -1) )
                             style="color: red;" 
                         @else 
                             style="color: green;" 
                         @endif
-                    >Your recent average loss per day was <span style="font-weight: 600;">{{ $recentLossPerDay }} lbs</span></span><br />
+                    >Your recent average change per day was <span style="font-weight: 600;">{{ $recentLossPerDay }} lbs</span></span><br />
                     
                     &darr;
                 </div>
@@ -110,7 +110,7 @@
             <div class="row">
                 <div class="col">
                     <h3 title="">Mini goal date</h3>
-                    {{ str_replace(" 00:00:00.000", "", $milestoneDateText) }}
+                    {{ str_replace(" 00:00:00", "", str_replace(".000", "", $milestoneDateText)) }}
                 </div>
 
                 <div class="col">
