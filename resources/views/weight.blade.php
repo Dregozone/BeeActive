@@ -75,8 +75,67 @@
 
             <div class="row">
                 <div class="col">
+                    <h3 title="This is when you set this goal">Start date</h3>
+
+                </div>
+
+                <div class="col">
                     <h3 title="Weight recorded at start of this schedule">Start weight (lb)</h3>
                     {{ $currentWeight }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col" style="padding: 0; margin:  0; border: none; text-align: center; background: none;">
+                    &darr;<br />
+                    To lose 
+                    <span style="font-weight: 600;">{{ $currentWeight - $targetWeight }} lbs</span> 
+                    in 
+                    <span style="font-weight: 600;">{{ $daysInSchedule }} days</span> 
+                    requires an avg. loss of 
+                    <span style="font-weight: 600;">{{ ROUND($requiredLossPerDay, 1) }} lbs / day</span>.<br />
+
+                    <span 
+                        @if ( $recentLossPerDay > 0 )
+                            style="color: red;" 
+                        @else 
+                            style="color: green;" 
+                        @endif
+                    >Your recent average loss per day was <span style="font-weight: 600;">{{ $recentLossPerDay }} lbs</span></span><br />
+                    
+                    &darr;
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h3 title="">Mini goal date</h3>
+                    {{ str_replace(" 00:00:00.000", "", $milestoneDateText) }}
+                </div>
+
+                <div class="col">
+                    <h3 title="The next milestone weight you would like to reach">Mini goal weight (lb)</h3>
+                    {{ $targetWeight }} 
+                </div>
+            </div>
+
+            <br />
+
+            {{-- 
+            <div class="row">
+                <div class="col" style="padding: 0; margin:  0; border: none; text-align: center;">
+                    &darr;<br />
+                    ? days<br />
+                    &darr;
+                </div>
+            </div>
+            --}} 
+
+            {{-- 
+            <div class="row">
+                <div class="col">
+                    <h3 title="">End goal date</h3>
+                    Ongoing
                 </div>
 
                 <div class="col">
@@ -84,25 +143,7 @@
                     {{ $endGoal }} (Diff: {{ $currentWeight - $endGoal }})
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <h3 title="The next milestone weight you would like to reach">Target weight (lb)</h3>
-                    {{ $targetWeight }} (Diff: {{ $currentWeight - $targetWeight }})
-                </div>
-
-                <div class="col">
-                    <h3 title="You would like to reach your milestone target weight in this many days">Days in schedule</h3>
-                    <span title="{{ $milestoneDateText }}">{{ $daysInSchedule }}</span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <h3 title="In order to reach the milestone in time, this much loss is required per day (Average)">Required loss per day</h3>
-                    {{ ROUND($requiredLossPerDay, 1) }} lbs
-                </div>
-            </div>
+            --}} 
 
             <hr />
 

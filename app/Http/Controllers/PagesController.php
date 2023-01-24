@@ -379,6 +379,21 @@ class PagesController extends Controller
             $i++;
         }
         
+        // Find average loss of recently recorded values
+        $numRecords = 0;
+        $totalDiffs = 0;
+        for ( $i=0, $j=sizeof($bodyWeights); $i<$j; $i++) { //$bodyWeights as $record ) {
+            if ( isset($bodyWeights[$i + 1]) ) {
+
+                $newBodyWeight = $bodyWeights[$i]->weight_in_lbs;
+                $oldBodyWeight = $bodyWeights[$i + 1]->weight_in_lbs;
+
+                $numRecords++;
+                $totalDiffs += ($newBodyWeight - $oldBodyWeight);
+            }            
+        }
+        $recentLossPerDay = ROUND(($totalDiffs / $numRecords), 2);
+        
         return view('weight', [
             'currentWeight' => $currentWeight,
             'endGoal' => $endGoal,
@@ -390,6 +405,8 @@ class PagesController extends Controller
             'numToShow' => $numToShow,
             'milestoneDateText' => $milestoneDateText,
             'graphDatas' => $graphDatas,
+
+            'recentLossPerDay' => $recentLossPerDay,
         ]);
     }
 

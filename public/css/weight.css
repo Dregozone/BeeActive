@@ -7,7 +7,9 @@
     margin-top: 2%;
 }
     .weightGoals > div > div {
-        border: 1px solid black;
+        border: 1px solid rgb(168, 145, 39);
+        border-radius: 8px;
+        background: rgba(168, 145, 39, 0.1);
         padding: 2%;
         margin: 0.5%;
     }
